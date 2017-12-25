@@ -26,7 +26,7 @@
 		<property name="email" column="email"></property>
 		
 		<!-- 4:配一对多的关系 -->
-		<set name="materialSet" cascade="save-update,delete" inverse="true">
+		<set name="materialSet" cascade="save-update,delete" inverse="true" lazy="false">
 				<!-- 一对多建表，外键是在多的一方，但是hibernate中默认双向，所以在多和一的方面都要外键 -->
 				<key column ="uid"></key>
 				<one-to-many class = "cn.cs.entity.Material"/>

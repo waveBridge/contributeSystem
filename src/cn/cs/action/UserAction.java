@@ -2,6 +2,7 @@ package cn.cs.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,9 +11,13 @@ import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import cn.cs.entity.Material;
 import cn.cs.entity.User;
 import cn.cs.service.UserService;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+import net.sf.json.util.CycleDetectionStrategy;
 
 public class UserAction extends ActionSupport {
 
@@ -107,7 +112,6 @@ public class UserAction extends ActionSupport {
 			String company 	= request.getParameter("company");
 			String phone 	= request.getParameter("phone");
 			
-			
 			//先查找该用户名是否被注册
 			boolean flag = userService.searchUser(username);
 			
@@ -144,6 +148,45 @@ public class UserAction extends ActionSupport {
 		} catch (Exception e) {
 			System.out.println("注册异常");
 			json.put("msg", "0");                  	      //注册 异常
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
+		
+		return null;
+	}
+	
+	//获取当前该用户的稿件
+	public String getMaterial() throws IOException {
+		System.out.println("upFile...action...");
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		
+		//设置jsonConfig是为了摆脱死循环，因为是多对多级联关系
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+		
+		JSONObject json = new JSONObject();
+		JSONArray json2;
+		
+		try{
+			Set<Material> materialSet = userService.getMaterials();
+			if(materialSet == null){
+				json.put("msg", "-1");								//null
+			} else{
+				json.put("cnt", materialSet.size());				//材料数量
+				json2 = JSONArray.fromObject(materialSet, jsonConfig);
+				json.put("msg", json2);								//材料列表
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg", "-1");
 		} finally {
 			out.write(json.toString());
 			out.flush();

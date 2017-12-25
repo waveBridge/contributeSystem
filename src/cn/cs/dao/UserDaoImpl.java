@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import cn.cs.entity.Material;
 import cn.cs.entity.User;
 
 public class UserDaoImpl implements UserDao {
@@ -67,6 +68,26 @@ public class UserDaoImpl implements UserDao {
 			return 0;
 		}
 		
+	}
+
+	//根据用户id获取材料
+	@Override
+	public Set<Material> getMaterials(int uid) {
+		System.out.println("getMaterials...dao...");
+		
+		try{
+			User user = hibernateTemplate.get(User.class, uid);
+			if(user == null) {
+				return null;
+			} else {
+				Set<Material> materialSet = user.getMaterialSet();
+				return materialSet;
+			}
+	
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
 	}
 	
 }

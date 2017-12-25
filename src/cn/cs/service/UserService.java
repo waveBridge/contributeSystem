@@ -1,12 +1,14 @@
 package cn.cs.service;
 
 import java.util.Calendar;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.transaction.annotation.Transactional;   //注意事务的配置引入的包一定不要错
 
 import cn.cs.dao.UserDao;
+import cn.cs.entity.Material;
 import cn.cs.entity.User;
 import cn.cs.util.MailUtil;
 import cn.cs.util.TimeUtil;
@@ -128,6 +130,26 @@ public class UserService {
 		} else {
 			return false;
 		}
+	}
+	
+	//查看当前用户的所有材料
+	public Set<Material> getMaterials() {
+		System.out.println("getMaterials...service...");
+		
+		try{
+			//获取用户id
+			HttpSession session = ServletActionContext.getRequest().getSession();
+			int uid = (int)session.getAttribute("uid");
+			
+			//根据uid获取材料
+			Set<Material> materialSet = userDao.getMaterials(uid);
+			return materialSet;
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());					//错误
+			return null;
+		}
+
 	}
 	
 }

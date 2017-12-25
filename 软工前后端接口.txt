@@ -1,0 +1,20 @@
+//用户登录
+url	:	loginAction
+in	:	username,password   (需要前端提前判断是否为空)
+out	:	登陆成功("msg":"1")  登录失败("msg":"0")
+
+//用户注册请求发送邮箱验证码
+url	：	getVCodeAction	
+in	:	email               (邮箱地址)需要前端判断邮箱格式是否正确
+out	:	发送邮件成功("msg":"1")		发送邮件失败("msg":"0")  前端需要定时器保证60秒内用户只能请求一次邮件发送
+
+//用户注册
+url	:	registerAction
+in	:	username,password,nickname,email,vcode,company,address,phone (姓名，密码，昵称，邮箱，验证码,单位，地址，手机) 输入两次密码是否一致前端判断
+out	:	用户名重复("msg":"3")	验证码错误或失效("msg":"2")		服务器原因注册失败("msg":"0")	注册成功("msg":"1") 
+
+//获取当前用户的稿件
+url :	getMaterialAction
+in	:	无输入
+out :	返回该用户稿件("msg":[{稿件的各种属性}],"cnt":"稿件数量")
+  
