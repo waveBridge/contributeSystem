@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.il8n.encoding" value="UTF-8" />
+	
+	<constant name="struts.action.extension" value=","></constant>    
+    <!-- 上传文件最大限制（如果为多文件上传，则为多个文件的总大小） -->    
+    <constant name="struts.multipart.maxSize" value="40000000"></constant>    
+    <!-- 存放上传文件的临时目录 -->    
+    <constant name="struts.multipart.saveDir" value="D:\\temp"></constant>      
+	
+	<!-- 注意使用的包不是struts-default 而是json-default -->
+	<package name="myPackage" namespace="/" extends="json-default">		
+		<action name="*Action" class = "userAction" method="{1}"></action>
+	</package>
+</struts>
