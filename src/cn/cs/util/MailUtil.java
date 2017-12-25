@@ -36,8 +36,8 @@ public class MailUtil {
 			
 			mailMessage.setTo(to); 
 		    mailMessage.setFrom( "15850685753@163.com" ); 
-		    mailMessage.setSubject( "体育教学分类推荐平台邮箱验证码" ); 
-		    mailMessage.setText("发自体育教学分类推荐平台,这是您的验证码:  "+text+" ,10分钟之内有效。"); 
+		    mailMessage.setSubject( "【投稿系统】验证码" ); 
+		    mailMessage.setText("【投稿系统】,这是您的验证码:  "+text+" ,10分钟之内有效。"); 
 			
 		    senderImpl.setUsername("15850685753@163.com");
 		    senderImpl.setPassword("L19970604");

@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import cn.cs.entity.User;
+
 public class UserDaoImpl implements UserDao {
 	
 	private HibernateTemplate hibernateTemplate; 
@@ -18,9 +20,20 @@ public class UserDaoImpl implements UserDao {
 	public int searchUser(String username, String password) {
 		System.out.println("searchUer...dao...");
 		
+		try{
+			@SuppressWarnings("unchecked")
+			List<User> userList = (List<User>)hibernateTemplate.find("from User where username = ? and password = ?", username, password);
+			if(userList.size() == 0){
+				return 0;
+			} else {
+				return userList.get(0).getUid();
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return 0;
+		}
 		
-		// TODO 自动生成的方法存根
-		return 0;
 	}
 	
 }
