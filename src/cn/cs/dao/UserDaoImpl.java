@@ -15,10 +15,10 @@ public class UserDaoImpl implements UserDao {
 		this.hibernateTemplate = hibernateTemplate;
 	}
 	
-	//查询用户
+	//根据用户名密码查询用户
 	@Override
 	public int searchUser(String username, String password) {
-		System.out.println("searchUer...dao...");
+		System.out.println("searchUser...dao...");
 		
 		try{
 			@SuppressWarnings("unchecked")
@@ -30,6 +30,39 @@ public class UserDaoImpl implements UserDao {
 			}
 			
 		} catch (Exception e) {
+			System.out.println(e.toString());
+			return 0;
+		}
+		
+	}
+
+	//根据用户名查询用户
+	@Override
+	public int searchUser(String username) {
+		System.out.println("searchUser...dao...");
+		try{
+			@SuppressWarnings("unchecked")
+			List<User> userList = (List<User>)hibernateTemplate.find("from User where username = ?", username);
+			if(userList.size() == 0){
+				return 0;
+			} else {
+				return userList.get(0).getUid();
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return 0;
+		}
+
+	}
+
+	//添加用户
+	@Override
+	public int addUser(User user) {
+		System.out.println("addUser...dao...");
+		try{
+			int flag = (int)hibernateTemplate.save(user);
+			return flag;
+		}catch (Exception e) {
 			System.out.println(e.toString());
 			return 0;
 		}

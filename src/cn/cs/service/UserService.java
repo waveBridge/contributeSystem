@@ -48,7 +48,6 @@ public class UserService {
 		
 	}
 	
-	
 	//发送邮件获取验证码
 	public boolean getVCode(String email) {
 		System.out.println("getVCode...service...");
@@ -73,23 +72,62 @@ public class UserService {
 	
 	//查找用户
 	public boolean searchUser(String username) {
-		// TODO 自动生成的方法存根
-		return false;
+		System.out.println("search...service...");
+		
+		try{
+			int uid = userDao.searchUser(username);
+			if(uid == 0){
+				return false;								//没找到
+			} else {
+				return true;								//找到了
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return false;									//错误
+		}
+		
 	}
 	
-	
+	//比较验证码是否正确以及是否失效
 	public boolean cmpVCode(String vcode) {
-		// TODO 自动生成的方法存根
-		return false;
+		System.out.println("cmpVCode...service...");
+		
+		try{
+			HttpSession session = ServletActionContext.getRequest().getSession();
+			String vcodeTime =  (String) session.getAttribute("vcodeTime");
+			String vcodeTimeArray[] = vcodeTime.split("#");
+			
+			//先比较验证码是否正确
+			if(vcodeTimeArray[0].equals(vcode)) {
+				boolean flag = timeUtil.cmpTime(vcodeTimeArray[1]);	
+				if(flag == true){
+					return true;
+				}
+				
+			}
+			return false;
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return false;
+		}	 
 	}
 	
 	
+	//注册
 	public boolean register(User user) {
-		// TODO 自动生成的方法存根
-		return false;
+		System.out.println("register...service...");
+		
+		int flag = userDao.addUser(user);
+		
+		if(flag != 0) {
+			HttpSession session = ServletActionContext.getRequest().getSession();
+			session.setAttribute("uid", flag);                //用户id放入 session
+			return true;
+		} else {
+			return false;
+		}
 	}
-	
-	
-	
 	
 }

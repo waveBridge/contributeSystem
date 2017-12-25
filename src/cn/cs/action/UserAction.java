@@ -141,9 +141,9 @@ public class UserAction extends ActionSupport {
 				}
 			}
 			
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("注册异常");
-			json.put("msg", "0");                     //注册 异常
+			json.put("msg", "0");                  	      //注册 异常
 		} finally {
 			out.write(json.toString());
 			out.flush();
@@ -152,7 +152,5 @@ public class UserAction extends ActionSupport {
 		
 		return null;
 	}
-	
-	
 	
 }
