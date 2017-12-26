@@ -89,5 +89,24 @@ public class UserDaoImpl implements UserDao {
 			return null;
 		}
 	}
+
+	//上传文件
+	@Override
+	public boolean upFile(int uid, Material material) {
+		System.out.println("upFile...dao...");
+		
+		try{
+			User user = hibernateTemplate.get(User.class, uid);
+			user.getMaterialSet().add(material);
+			material.setUser(user);
+			hibernateTemplate.save(user);
+			hibernateTemplate.save(material);
+			return true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+	}
 	
 }

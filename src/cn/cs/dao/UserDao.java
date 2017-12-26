@@ -13,4 +13,6 @@ public interface UserDao {
 	public int addUser(User user);
 
 	public Set<Material> getMaterials(int uid);
+
+	public boolean upFile(int uid, Material material);
 }

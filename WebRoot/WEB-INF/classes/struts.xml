@@ -14,6 +14,11 @@
 	
 	<!-- 注意使用的包不是struts-default 而是json-default -->
 	<package name="myPackage" namespace="/" extends="json-default">		
+		<action name="upFileAction" class = "userAction" method="upFile">
+			<!-- param是参数，能够到action中 -->
+			<param name="maximumSize ">1000000</param>    
+            <param name="allowedTypes">image/png,image/jpg,image/jpeg,image/gif,application/msword,application/pdf,application/vnd.ms-excel,aplication/zip,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</param>     
+		</action>
 		<action name="*Action" class = "userAction" method="{1}"></action>
 	</package>
 </struts>

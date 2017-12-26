@@ -1,5 +1,6 @@
 package cn.cs.action;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Set;
@@ -26,6 +27,43 @@ public class UserAction extends ActionSupport {
 		this.userService = userService;
 	}
 	
+	private File upload;                  //上传文件
+	private String uploadFileName;        //上传文件名
+	private String uploadContentType; 	  //上传文件类型
+    private long maximumSize;  
+    private String allowedTypes; 
+    
+	public File getUpload() {
+		return upload;
+	}
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+	public String getUploadFileName() {
+		return uploadFileName;
+	}
+	public void setUploadFileName(String uploadFileName) {
+		this.uploadFileName = uploadFileName;
+	}
+	public String getUploadContentType() {
+		return uploadContentType;
+	}
+	public void setUploadContentType(String uploadContentType) {
+		this.uploadContentType = uploadContentType;
+	}
+	public long getMaximumSize() {
+		return maximumSize;
+	}
+	public void setMaximumSize(long maximumSize) {
+		this.maximumSize = maximumSize;
+	}
+	public String getAllowedTypes() {
+		return allowedTypes;
+	}
+	public void setAllowedTypes(String allowedTypes) {
+		this.allowedTypes = allowedTypes;
+	}
+
 	//登录
 	public String login() throws IOException{
 		System.out.println("login...action...");
@@ -187,6 +225,34 @@ public class UserAction extends ActionSupport {
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			json.put("msg", "-1");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
+		
+		return null;
+	}
+	
+	//上传稿件
+	public String upFile() throws IOException{
+		System.out.println("upFile...action...");
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		
+		JSONObject json = new JSONObject();
+		try{
+			String materialName = request.getParameter("materialName");
+			String flag = userService.upFile(maximumSize,allowedTypes,upload,uploadFileName,uploadContentType,materialName);
+			json.put("msg", flag);		//0失败  1成功  -1文件过大  -2文件类型不匹配
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg", "0");
 		} finally {
 			out.write(json.toString());
 			out.flush();

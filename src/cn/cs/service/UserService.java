@@ -1,9 +1,12 @@
 package cn.cs.service;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.transaction.annotation.Transactional;   //注意事务的配置引入的包一定不要错
 
@@ -150,6 +153,70 @@ public class UserService {
 			return null;
 		}
 
+	}
+	
+	//上传文件
+	public String upFile(long maximumSize, String allowedTypes, File upload, String uploadFileName,
+			String uploadContentType, String materialName) {
+		System.out.println("upFile...service...");
+		HttpSession session = ServletActionContext.getRequest().getSession();
+		
+		try{
+			//新建文件
+			File uploadFile = new File(ServletActionContext.getServletContext().getRealPath("upload"));
+			if(!uploadFile.exists()) {  
+	            uploadFile.mkdir();  
+	        } 
+			
+			//验证文件大小
+	        if (maximumSize < upload.length()) {  
+	            return "-1";                       //文件过大
+	            
+	        } else {
+	        	//验证文件格式
+	        	boolean flag = false;  
+	            String[]  allowedTypesStr = allowedTypes.split(",");    //这是在配置文件中 按照逗号隔开
+	            
+	            for (int i = 0; i < allowedTypesStr.length; i++) {  
+	                if (uploadContentType.equals(allowedTypesStr[i])) {  
+	                    flag = true;                              
+	                }  
+	            }  
+	            
+	            if (flag == false) {  
+	                return "-2";                 					    //文件格式错误
+	            } else {
+	            	String path = uploadFile.getPath()+ "\\" + uploadFileName;
+	            	
+	            	//准备上传
+		            FileUtils.copyFile(upload, new File(path));  
+		            //删除临时文件 
+		            upload.delete(); 
+		            
+		            //相对路径
+		            String rePath = "upload" + "\\" + uploadFileName;
+		            
+		            Material material = new Material();
+		            material.setMaterialName(materialName);
+		            material.setState(0);							//待审核
+		            material.setUrl(rePath);
+		            
+		            //写入数据库
+		            boolean flag2 = userDao.upFile((int)session.getAttribute("uid"), material);
+		            if(flag2 == false) {
+		            	return "0";                  //失败
+		            } else { 
+		            	System.out.println(ServletActionContext.getServletContext().getContextPath());
+		            	return "1";               //成功
+		            }
+		      
+	            }
+	        }
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return "0";
+		}
+	
 	}
 	
 }
