@@ -22,4 +22,9 @@ out :	返回该用户稿件("msg":[{稿件的各种属性}],"cnt":"稿件数量"
 url	:	upFileAction
 in	:	materialName(稿件的名字)  upload(表单里file的name)
 out	:	上传成功("msg","1")   文件过大("msg","-1")   文件类型不匹配("msg","-2")   未知错误("msg","0")
+
+//下载稿件
+url	:	downFileAction
+in	:	mid(稿件的id)
+out :	无  直接弹出下载页
   

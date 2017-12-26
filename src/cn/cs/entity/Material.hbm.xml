@@ -20,6 +20,7 @@
 		<property name="materialName" column="materialName"></property>
 		<property name="url" column="url"></property>
 		<property name="state" column="state"></property>
+		<property name="date" column="date"></property>
 
 		<!-- 4:配多对一的关系 -->
 		<many-to-one name="user" class = "cn.cs.entity.User" column = "uid"></many-to-one>

@@ -41,5 +41,6 @@
 	<import resource="classpath:mailUtil.xml"/>
 	<import resource="classpath:timeUtil.xml"/>
 	<import resource="classpath:userBean.xml"/>
+	<import resource="classpath:materialBean.xml"/>
 	
 </beans>

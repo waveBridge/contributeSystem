@@ -5,6 +5,7 @@ public class Material {
 	private String  materialName;
 	private String  url;
 	private Integer state;
+	private String  date;
 	private User 	user;
 	
 	public Integer getMid() {
@@ -30,6 +31,12 @@ public class Material {
 	}
 	public void setState(Integer state) {
 		this.state = state;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
 	}
 	public User getUser() {
 		return user;

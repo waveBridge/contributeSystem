@@ -22,6 +22,19 @@ public class TimeUtil {
 		return date.toString();
 	}
 	
+	//获取时间 按照年日的格式
+	public String getTimeByForm() {
+		System.out.println("getTimeByForm...util...");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Calendar calendar = Calendar.getInstance();
+		Long date = calendar.getTime().getTime();             //获取毫秒时间
+		String dateStringPaString = sdf.format(date);
+		return dateStringPaString;
+	}
+	
+	
+	//比较时间
 	public boolean cmpTime(String time) {
 		System.out.println("cmpTime...util...");
 		long tempTime = Long.parseLong(time);

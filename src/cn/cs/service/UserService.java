@@ -200,6 +200,7 @@ public class UserService {
 		            material.setMaterialName(materialName);
 		            material.setState(0);							//待审核
 		            material.setUrl(rePath);
+		            material.setDate(timeUtil.getTimeByForm());
 		            
 		            //写入数据库
 		            boolean flag2 = userDao.upFile((int)session.getAttribute("uid"), material);
