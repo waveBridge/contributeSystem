@@ -21,5 +21,7 @@
 		</action>
 		<action name="*Action" class = "userAction" method="{1}"></action>
 		<action name="downFileAction" class = "materialAction" method="downFile"></action>
+		<action name="adminLoginAction" class = "adminAction" method="adminLogin"></action>
+		<action name="getAllMaterialAction" class = "adminAction" method="getAllMaterial"></action>
 	</package>
 </struts>

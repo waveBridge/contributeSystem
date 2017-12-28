@@ -27,4 +27,14 @@ out	:	上传成功("msg","1")   文件过大("msg","-1")   文件类型不匹配
 url	:	downFileAction
 in	:	mid(稿件的id)
 out :	无  直接弹出下载页
+
+//管理员登录
+url	：	adminLoginAction
+in	:	adminName, password		(管理员账号密码)
+out :	登陆成功("msg":"1")  登录失败("msg":"0")
+
+//查看所有用户的材料
+url :	getAllMaterialAction
+in 	:	无
+out :	错误("msg","-1")   成功返回信息("cnt":"稿件数量","msg":[{稿件各种属性以及所属用户}])
   
