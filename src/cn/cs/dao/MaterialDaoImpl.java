@@ -44,6 +44,20 @@ public class MaterialDaoImpl implements MaterialDao {
 			return null;
 		}
 	}
-	
-	
+
+	//改变稿件状态
+	@Override
+	public String changeState(int mid, int state) {
+		System.out.println("changeState...dao...");
+		
+		try{
+			Material material = hibernateTemplate.get(Material.class, mid);
+			material.setState(state);
+			hibernateTemplate.update(material);
+			return material.getUser().getEmail();				//返回此稿件的用户的邮箱地址
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return "-1";
+		}	
+	}
 }

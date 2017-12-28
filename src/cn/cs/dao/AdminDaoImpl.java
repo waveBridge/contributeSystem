@@ -49,4 +49,43 @@ public class AdminDaoImpl implements AdminDao {
 			return null;
 		}
 	}
+
+	//根据nickname获取稿件
+	@Override
+	public Set<Material> getMaterialByNickname(String nickname) {
+		System.out.println("getMaterialByNickname...dao...");
+		
+		try{
+			@SuppressWarnings("unchecked")
+			List<User> userList = (List<User>) hibernateTemplate.find("from User where nickname = ?", nickname);
+			if(userList == null || userList.size() == 0){
+				return null;									//没找到或错误
+			} else {
+				Set<Material> materialSet = userList.get(0).getMaterialSet();
+				for(int i = 1; i < userList.size();i ++){
+					materialSet.addAll(userList.get(i).getMaterialSet());
+				}
+				return materialSet;
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
+
+	//通过状态获取稿件
+	@Override
+	public List<Material> getMaterialByState(int state) {
+		System.out.println("getMaterialByState...dao...");
+		
+		try{
+			@SuppressWarnings("unchecked")
+			List<Material> materialList = (List<Material>) hibernateTemplate.find("from Material where state = ?", state);
+			return materialList;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
 }

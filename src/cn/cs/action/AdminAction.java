@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Set;
 
+import javax.json.Json;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -90,6 +91,85 @@ public class AdminAction extends ActionSupport {
 			out.flush();
 			out.close();
 		}
+		
+		return null;
+	}
+	
+	//根据作者查名询稿件
+	public String getMaterialByAuthor() throws IOException{
+		System.out.println("getMaterialByAuthor...action...");
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		
+		//设置jsonConfig是为了摆脱死循环，因为是级联关系
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);  
+		
+		JSONObject json = new JSONObject();
+		JSONArray json2;
+		try{
+			String nickname = request.getParameter("nickname");
+			Set<Material> materialSet = adminService.getMaterialByAuthor(nickname);
+			if(materialSet == null){
+				json.put("msg", "-1");
+			} else {
+				json.put("cnt", materialSet.size());
+				json2 = JSONArray.fromObject(materialSet, jsonConfig);
+				json.put("msg", json2);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg", "-1");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
+		
+		return null;
+	}
+	
+	//根据待处理查询
+	public String getMaterialByState() throws IOException{
+		System.out.println("getMaterialByState...action...");
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		
+		//设置jsonConfig是为了摆脱死循环，因为是级联关系
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);  
+		
+		JSONObject json = new JSONObject();
+		JSONArray json2;
+		try{
+			String state = request.getParameter("state");
+			List<Material> materialList = adminService.getMaterialByState(state);
+			if(materialList == null) {
+				json.put("msg", "-1");
+			} else{
+				json.put("cnt", materialList.size());
+				json2 = JSONArray.fromObject(materialList, jsonConfig);
+				json.put("msg", json2);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg","-1");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
+		
 		
 		return null;
 	}

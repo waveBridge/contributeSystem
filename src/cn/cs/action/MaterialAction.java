@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +50,7 @@ public class MaterialAction extends ActionSupport {
 			File uploadFile = new File(ServletActionContext.getServletContext().getRealPath("\\"));
 			String rmUrl = uploadFile.getPath() + "\\" + mUrl;
 			
-			System.out.println("mName...>>>>>>>>>>>>" + mName);
+			//System.out.println("mName...>>>>>>>>>>>>" + mName);
 		    response.setHeader("Content-Disposition", "attachment;filename=\"" + mName + "\"");
 		    
 		    //读取要下载的文件，保存到文件输入流
@@ -70,6 +71,37 @@ public class MaterialAction extends ActionSupport {
 			os.close();
 		}
 		
+		return null;
+	}
+	
+	//处理稿件
+	public String changeState() throws IOException { 
+		System.out.println("changeState...action...");
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		
+		JSONObject json = new JSONObject();
+		try{
+			String state = request.getParameter("state");
+			String mid = request.getParameter("mid");
+			boolean flag = materialService.changeState(mid, state);
+			if(flag == false){
+				json.put("msg", "0");
+			} else {
+				json.put("msg", "1");
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg", "0");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
 		return null;
 	}
 	

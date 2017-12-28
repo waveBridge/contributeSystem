@@ -23,5 +23,8 @@
 		<action name="downFileAction" class = "materialAction" method="downFile"></action>
 		<action name="adminLoginAction" class = "adminAction" method="adminLogin"></action>
 		<action name="getAllMaterialAction" class = "adminAction" method="getAllMaterial"></action>
+		<action name="getMaterialByAuthorAction" class = "adminAction" method="getMaterialByAuthor"></action>
+		<action name="getMaterialByStateAction" class = "adminAction" method="getMaterialByState"></action>
+		<action name="changeStateAction" class = "materialAction" method="changeState"></action>
 	</package>
 </struts>

@@ -57,5 +57,40 @@ public class MailUtil {
 			return false;
 		}
 	}
+	
+	public boolean sendMailState (String to, String mName, String state) {
+		System.out.println("sendMail...util...");
+		
+		try{
+			//设定mail server
+			senderImpl.setHost("smtp.163.com");
+			
+			// 设置收件人，寄件人 用数组发送多个邮件
+			// String[] array = new String[]    {"sun111@163.com","sun222@sohu.com"};    
+			// mailMessage.setTo(array);    
+			
+			mailMessage.setTo(to); 
+		    mailMessage.setFrom( "15850685753@163.com" ); 
+		    mailMessage.setSubject( "【投稿系统】投稿结果" ); 
+		    mailMessage.setText("【投稿系统】您好！您的稿件《" + mName + "》的处理结果为："+state+"。"); 
+			
+		    senderImpl.setUsername("15850685753@163.com");
+		    senderImpl.setPassword("L19970604");
+		    
+		    prop.put("mail.smtp.auth","true");
+		    prop.put("mail.smtp.timeout","25000");
+		    senderImpl.setJavaMailProperties(prop);
+		    
+		    //发送邮件
+		    senderImpl.send(mailMessage);
+		    
+		    System.out.println("发送邮件成功");
+		    
+		    return true;
+		}catch (Exception e) {
+			System.out.println("发送邮件失败");
+			return false;
+		}
+	}
 
 }

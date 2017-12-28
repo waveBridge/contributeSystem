@@ -56,4 +56,31 @@ public class AdminService {
 		}
 
 	}
+
+	//通过作者获取稿件
+	public Set<Material> getMaterialByAuthor(String nickname) {
+		System.out.println("getMaterialByAuthor...service...");
+		
+		try{
+			Set<Material> materialSet = adminDao.getMaterialByNickname(nickname);
+			return materialSet;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
+
+	//根据状态获取稿件
+	public List<Material> getMaterialByState(String sstate) {
+		System.out.println("getMaterialByState...service...");
+		
+		try{
+			int state = Integer.parseInt(sstate);
+			List<Material> materialList = adminDao.getMaterialByState(state);
+			return materialList;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
 }

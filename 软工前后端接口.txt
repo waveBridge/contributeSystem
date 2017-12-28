@@ -37,4 +37,19 @@ out :	登陆成功("msg":"1")  登录失败("msg":"0")
 url :	getAllMaterialAction
 in 	:	无
 out :	错误("msg","-1")   成功返回信息("cnt":"稿件数量","msg":[{稿件各种属性以及所属用户}])
+
+//根据用户名查询材料
+utl ：	getMaterialByAuthorAction
+int	:	nickname     昵称
+out : 	错误("msg","-1")   成功返回信息("cnt":"稿件数量","msg":[{稿件各种属性以及所属用户}])
+
+//根据状态查询材料
+url	:	getMaterialByStateAction
+in 	:	state  （状态）
+out	：	错误（"msg","-1"）  成功返回信息("cnt":"稿件数量","msg":[{稿件各种属性以及所属用户}])
+
+//管理员审核，改变状态
+url	:	changeStateAction
+in	:	mid state			(稿件的id，改变为什么状态(数字))
+out	：	改变失败("msg","0")  改变成功("msg","1")
   

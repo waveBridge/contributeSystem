@@ -11,4 +11,8 @@ public interface AdminDao {
 
 	List<Material> getAllMaterial();
 
+	Set<Material> getMaterialByNickname(String nickname);
+
+	List<Material> getMaterialByState(int state);
+
 }

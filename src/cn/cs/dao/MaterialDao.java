@@ -6,4 +6,6 @@ public interface MaterialDao {
 
 	String getMName(int mid);
 
+	String changeState(int mid, int state);
+
 }
