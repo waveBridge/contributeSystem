@@ -1,0 +1,131 @@
+body {
+    width:100%;
+    background-image: url(../images/background.jpg);
+    background-size: cover;
+    font-family: 'Lato', sans-serif;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.container{
+    margin:120px auto;
+}
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+    border:1px solid black;
+    border-radius:10px;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form{
+    width: 380px;
+    margin:7% 0 0 10px;
+    height: 350px;
+    background-color: #ffffff;
+}
+.title{
+    width: 100%;
+    height: 50px;
+    text-align: center;
+}
+.message{
+    width: 90%;
+    height: 70px;
+    margin:20px 10px;
+    padding: 10px; 
+}
+/*.labels{
+    display: block;
+    float: left;
+    width: 100px;
+    height: 55px;
+}
+*/
+label{
+    color:#212121;
+    display: block;
+    float: left;
+    width: 100px;
+    height: 20px;
+/*    margin-bottom: 10px;
+    padding-bottom: 10px;*/
+    margin:0px;
+    padding:0px;
+    position:absolute;
+    font-size:20px;
+    font-weight:400;
+    transition: all .2s
+}
+.formInput{
+    background-color:transparent;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:2px solid #E1E1E1;
+    width:100%;
+    height: 30px;
+    display: block;
+    float: left;
+    padding-left: 100px;
+    margin-bottom:10px;
+    margin-top:10px;
+    color:#8C8C8C;
+    position:relative;
+}
+img{  
+    width: 25px;  
+    height: 25px;
+    display: block;    
+    float: right;
+    margin-left:220px;
+    margin-top:10px;
+    padding-bottom: 4px;
+    position:absolute;   
+}
+input:lang(no):focus{
+    outline:none;
+    color:#3498db;
+    height:40px;
+    border-bottom:2px solid #2980b9;
+    -webkit-transition:border-bottom .5s;
+    -moz-transition:border-bottom .5s;
+    -ms-transition:border-bottom .5s;
+    -o-transition:border-bottom .5s;
+    transition:border-bottom .5s;
+}
+.active{
+    transform:translateY(-10%);
+    font-size:10px;
+}
+.rem{
+    width: 200px;
+    height: 30px;
+    float: left;
+    margin: 5px 1px 1px 30px;
+    font-size:15px;
+}
+.rem input{
+    display: block;
+    float: left;
+    margin: 6px 5px 0 5px;
+}
+.rem p{
+    display: block;
+    float: left;
+}
+.rem a{
+    display:block;
+    float:right;
+}
+.btn-block{
+    margin: 0 10% 0 10%;
+    width: 80%;
+}

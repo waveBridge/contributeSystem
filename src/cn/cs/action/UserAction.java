@@ -78,6 +78,8 @@ public class UserAction extends ActionSupport {
 		try{
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>username"+username+"   passwrod"+password);
+			
 			boolean flag = userService.login(username, password);
 			if(flag == true){
 				json.put("msg", "1");							//允许登录
