@@ -108,5 +108,24 @@ public class UserDaoImpl implements UserDao {
 		}
 
 	}
+
+	//改变稿件
+	@Override
+	public boolean changeFile(int mid, String materialName, String rePath, String date) {
+		System.out.println("changeFile...dao...");
+		
+		try{
+			Material material = hibernateTemplate.get(Material.class, mid);
+			material.setDate(date);
+			material.setMaterialName(materialName);
+			material.setState(0);
+			material.setUrl(rePath);
+			hibernateTemplate.update(material);
+			return true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return false;
+		}
+	}
 	
 }

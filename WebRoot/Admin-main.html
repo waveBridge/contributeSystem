@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+
+    <link rel="stylesheet" href="assets/css/font-awesome.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <script src="assets/js/jquery-2.1.1.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script type="text/javascript" src="assets/js/modifyCss.js"></script>
+</head>
+<body>
+
+<!-- Add your site or application content here -->
+
+<!-- header Start
+================================================= -->
+
+<section id="header">
+    <div class="container">
+        <div class="row nav1">
+            <div class="col-md-6">
+                <div class="block-left">
+                    <nav class="navbar navbar-default" role="navigation">
+                        <div class="container-fluid">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                        data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <!-- <div class="nav-logo">
+                                    <img src="assets/img/img.png" alt="">
+                                </div> -->
+                            </div>
+                        </div><!-- /.container-fluid -->
+                    </nav>
+                </div>
+            </div><!-- .col-md-6 -->
+
+            <div class="col-md-6">
+                <div class="block-right">
+                    <div class="contact-area" >
+                        <ul>
+                            <li><i class="fa fa-user"></i>当前用户：1506010123（XX）</li>
+                            <li><a href="Admin-login.html">注销</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- .col-md-6 close -->
+        </div><!-- .row close -->
+        <div class="row ">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs">
+                    <li class="active" id="first">
+                        <a href="#">全部</a>
+                    </li>
+                    <li id="second">
+                        <a href="#">时间查询</a>
+                    </li>
+                    <li id="third">
+                        <a href="#">待处理稿件查询</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div><!-- .container close -->
+</section><!-- #heder close -->
+
+
+<div class="container">
+    <div class="row">
+
+       <!--  <div class="col-md-2">
+            <ul class="nav nav-stacked nav-pills">
+                <li class="active">
+                    <a href="#">首页</a>
+                </li>
+                <li>
+                    <a href="#">简介</a>
+                </li>
+                <li class="disabled">
+                    <a href="#">信息</a>
+                </li>
+
+
+            </ul>
+        </div> -->
+        <div class="col-md-8">
+            <table class="table table-hover">
+                <tr>
+                  <th class="active">作品名</td>
+                  <th class="success">作者</td>
+                  <th class="warning">时间</td>
+                  <th class="danger">状态</td>
+                  <th class="info">下载</td>
+                </tr>
+              <tbody id="tbody-result">
+                <tr>
+                  <td>软件工程</td>
+                  <td>戚荣志</td>
+                  <td>2017-12-28</td>
+                  <td>未审阅</td>
+                  <td><button type="button" class="btn btn-info" id="ret" onclick="load()">确认</button></td>
+                </tr>
+                <tr>
+                  <td>软件工程</td>
+                  <td>戚荣志</td>
+                  <td>2017-12-28</td>
+                  <td>未审阅</td>
+                  <td><button type="button" class="btn btn-info" id="ret">确认</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+                <a class="btn" href="Admin-modify.html">审阅文章 »</a>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                       作者查询
+                    </h3>
+                </div>
+                <div class="panel-body">
+                   <input type="text" name="" id="search" required="required"/><!-- <span class="glyphicon glyphicon-search find"></span> -->
+                   <button type="button" class="btn btn-primary" id="right">查询</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- footer Start
+====================================================================== -->
+
+<div id="footer" style="display: none">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            </div><!-- col-md-12 -->
+        </div><!-- .row -->
+    </div><!-- .container -->
+</div><!-- #footer -->
+
+</body>
+</html>

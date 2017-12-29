@@ -157,7 +157,7 @@ public class UserService {
 	
 	//上传文件
 	public String upFile(long maximumSize, String allowedTypes, File upload, String uploadFileName,
-			String uploadContentType, String materialName) {
+			String uploadContentType) {
 		System.out.println("upFile...service...");
 		HttpSession session = ServletActionContext.getRequest().getSession();
 		
@@ -196,6 +196,9 @@ public class UserService {
 		            //相对路径
 		            String rePath = "upload" + "\\" + uploadFileName;
 		            
+		            //去掉后缀
+		            String[] materialNameArray = uploadFileName.split("\\.");
+		            String materialName = materialNameArray[0];
 		            Material material = new Material();
 		            material.setMaterialName(materialName);
 		            material.setState(0);							//待审核
@@ -218,6 +221,69 @@ public class UserService {
 			return "0";
 		}
 	
+	}
+	
+	//改变稿件
+	public String changeFile(long maximumSize, String allowedTypes, File upload, String uploadFileName,
+			String uploadContentType, String mmid) {
+		System.out.println("changeFile...service...");
+		
+		try{
+			int mid = Integer.parseInt(mmid);
+			
+			//新建文件
+			File uploadFile = new File(ServletActionContext.getServletContext().getRealPath("upload"));
+			if(!uploadFile.exists()) {  
+	            uploadFile.mkdir();  
+	        } 
+			
+			//验证文件大小
+	        if (maximumSize < upload.length()) {  
+	            return "-1";                       //文件过大
+	            
+	        } else {
+	        	//验证文件格式
+	        	boolean flag = false;  
+	            String[]  allowedTypesStr = allowedTypes.split(",");    //这是在配置文件中 按照逗号隔开
+	            
+	            for (int i = 0; i < allowedTypesStr.length; i++) {  
+	                if (uploadContentType.equals(allowedTypesStr[i])) {  
+	                    flag = true;                              
+	                }  
+	            }  
+	            
+	            if (flag == false) {  
+	                return "-2";                 					    //文件格式错误
+	            } else {
+	            	String path = uploadFile.getPath()+ "\\" + uploadFileName;
+	            	
+	            	//准备上传
+		            FileUtils.copyFile(upload, new File(path));  
+		            //删除临时文件 
+		            upload.delete(); 
+		            
+		            //相对路径
+		            String rePath = "upload" + "\\" + uploadFileName;
+		            
+		            //去掉后缀
+		            String[] materialNameArray = uploadFileName.split("\\.");
+		            String materialName = materialNameArray[0];
+		            
+		            //写入数据库
+		            boolean flag2 = userDao.changeFile(mid,materialName,rePath,timeUtil.getTimeByForm());
+		            if(flag2 == false) {
+		            	return "0";                  //失败
+		            } else { 
+		            	System.out.println(ServletActionContext.getServletContext().getContextPath());
+		            	return "1";               //成功
+		            }
+		      
+	            }
+	        }
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return "0";
+		}
 	}
 	
 }

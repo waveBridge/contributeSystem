@@ -15,4 +15,6 @@ public interface UserDao {
 	public Set<Material> getMaterials(int uid);
 
 	public boolean upFile(int uid, Material material);
+
+	public boolean changeFile(int mid, String materialName, String rePath, String date);
 }

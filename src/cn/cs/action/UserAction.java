@@ -248,10 +248,37 @@ public class UserAction extends ActionSupport {
 		
 		JSONObject json = new JSONObject();
 		try{
-			String materialName = request.getParameter("materialName");
-			String flag = userService.upFile(maximumSize,allowedTypes,upload,uploadFileName,uploadContentType,materialName);
+			//String materialName = request.getParameter("materialName");
+			String flag = userService.upFile(maximumSize,allowedTypes,upload,uploadFileName,uploadContentType);
 			json.put("msg", flag);		//0失败  1成功  -1文件过大  -2文件类型不匹配
 			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg", "0");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
+		
+		return null;
+	}
+	
+	//修改稿件
+	public String changeFile() throws IOException{
+		System.out.println("changeFile...action...");
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		
+		JSONObject json = new JSONObject();
+		try{
+			String mid = request.getParameter("mid");
+			String flag = userService.changeFile(maximumSize,allowedTypes,upload,uploadFileName,uploadContentType,mid);
+			json.put("msg", flag);			//0失败  1成功  -1文件过大  -2文件类型不匹配
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			json.put("msg", "0");

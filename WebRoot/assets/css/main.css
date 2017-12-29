@@ -341,7 +341,7 @@ h1, h2, h3, h4, h5, h6 {font-weight:normal;margin:0 0 15px;}
 .block-left{}
 
 #header .block-right{}
-.contact-area{text-align: right; margin-top: 10px;}
+.contact-area{text-align: right; margin-top: 22px;}
 .contact-area ul{margin: 0px; padding: 0px; list-style: none;}
 .contact-area ul li{display: inline-block; margin-left: 40px; color:#3C3D42; font-size: 17px; font-family: 'Raleway', sans-serif; font-weight: 400px; }
 .contact-area ul li i{margin-right: 10px; font-size: 18px; }
@@ -572,7 +572,20 @@ width: 42px;}
 .teb-icon-edit i{font-size: 170px}
 
 
+.nav1{
+    background:url("../img/img.png") no-repeat;
+    background-size: 100% 100%;
+    margin-bottom:15px;
 
-
+}
+/*.find{
+    display:inline-block;
+    float:left;
+    padding:15px;
+    position: absolute;
+   
+    left:50px;
+    
+}*/
 
 
