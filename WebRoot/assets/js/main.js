@@ -1,15 +1,19 @@
 $(document).ready(function() {
+	var show=localStorage.getItem("username");
+	//alert("用户："+show);
+	$("#user").innerHTML=show;
 	var tbody=document.getElementById("tbody-result");
 		$.ajax({
 			url : "getAllMaterialAction",   
 			type : "POST", 		   
 			dataType : "json",	   
-				
+			async: false,	
 			data : {
 
 			},				
 
-			success : function(data) {   
+			success : function(data) {  
+				console.log(data); 
 				var json=eval(data);
 				var msg=json.msg;    
 				//msg属性article name time state  butn
@@ -23,7 +27,7 @@ $(document).ready(function() {
 								"<td>"+msg[i].user.username+"</td>"+
 								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"待审核"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}else if(msg[i].state==1){
 							str+="<tr>"+
@@ -31,7 +35,7 @@ $(document).ready(function() {
 								"<td>"+msg[i].user.username+"</td>"+
 								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"录用"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}else if(msg[i].state==2){
 							str+="<tr>"+
@@ -39,7 +43,7 @@ $(document).ready(function() {
 								"<td>"+msg[i].user.username+"</td>"+
 								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"退稿"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}else{
 							str+="<tr>"+
@@ -47,7 +51,7 @@ $(document).ready(function() {
 								"<td>"+msg[i].user.username+"</td>"+
 								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"修改"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}
 						
@@ -87,7 +91,7 @@ $(document).ready(function() {
 								"<td>"+msg[i].user.username+"</td>"+
 								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"待审核"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}else if(msg[i].state==1){
 							str+="<tr>"+
@@ -95,7 +99,7 @@ $(document).ready(function() {
 								"<td>"+msg[i].user.username+"</td>"+
 								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"录用"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}else if(msg[i].state==2){
 							str+="<tr>"+
@@ -103,7 +107,7 @@ $(document).ready(function() {
 								"<td>"+msg[i].user.username+"</td>"+
 								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"退稿"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}else{
 							str+="<tr>"+
@@ -111,7 +115,7 @@ $(document).ready(function() {
 								"<td>"+msg[i].user.username+"</td>"+
 								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"修改"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}
 						
@@ -147,34 +151,35 @@ $(document).ready(function() {
 					for(var i=0;i<msg.length;i++){
 						if(msg[i].state==0){
 							str+="<tr>"+
-								"<td>"+msg[i].date+"</td>"+
-								"<td>"+msg[i].user.materialName+"</td>"+
+								"<td>"+msg[i].materialName+"</td>"+
 								"<td>"+msg[i].user.username+"</td>"+
+								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"待审核"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}else if(msg[i].state==1){
 							str+="<tr>"+
-								"<td>"+msg[i].date+"</td>"+
-								"<td>"+msg[i].user.materialName+"</td>"+
+								"<td>"+msg[i].materialName+"</td>"+
 								"<td>"+msg[i].user.username+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td>"+msg[i].date+"</td>"+
+								"<td>"+"录用"+"</td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}else if(msg[i].state==2){
 							str+="<tr>"+
-								"<td>"+msg[i].date+"</td>"+
-								"<td>"+msg[i].user.materialName+"</td>"+
+								"<td>"+msg[i].materialName+"</td>"+
 								"<td>"+msg[i].user.username+"</td>"+
+								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"退稿"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}else{
 							str+="<tr>"+
-								"<td>"+msg[i].date+"</td>"+
-								"<td>"+msg[i].user.materialName+"</td>"+
+								"<td>"+msg[i].materialName+"</td>"+
 								"<td>"+msg[i].user.username+"</td>"+
+								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"修改"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}
 						
@@ -214,8 +219,8 @@ $(document).ready(function() {
 								"<td>"+msg[i].materialName+"</td>"+
 								"<td>"+msg[i].user.username+"</td>"+
 								"<td>"+msg[i].date+"</td>"+
-								"<td>"+"待审核"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td>"+"<a href='Admin-modify.html'>待审核</a>"+"</td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}
 						
@@ -257,7 +262,7 @@ $(document).ready(function() {
 								"<td>"+msg[i].user.username+"</td>"+
 								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"待审核"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}else if(msg[i].state==1){
 							str+="<tr>"+
@@ -265,7 +270,7 @@ $(document).ready(function() {
 								"<td>"+msg[i].user.username+"</td>"+
 								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"录用"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}else if(msg[i].state==2){
 							str+="<tr>"+
@@ -273,7 +278,7 @@ $(document).ready(function() {
 								"<td>"+msg[i].user.username+"</td>"+
 								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"退稿"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}else{
 							str+="<tr>"+
@@ -281,7 +286,7 @@ $(document).ready(function() {
 								"<td>"+msg[i].user.username+"</td>"+
 								"<td>"+msg[i].date+"</td>"+
 								"<td>"+"修改"+"</td>"+
-								"<td><button type= 'button' class='btn btn-info' onclick='load()'>确认</button></td>"+
+								"<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>确认</button></td>"+
 							"</tr>";
 						}
 					}
@@ -294,5 +299,28 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+
+	 $(".load").click(function(){ 
+		 var mid= $(this).attr("mid");
+		 window.location.href="downFileAction?mid="+mid;
+	 });
+	 
+//	 $(".load").click(function(){  
+//   		var mid= $(this).attr("mid");
+//   		alert(mid);
+//   		$.ajax({
+//			url : "downFileAction",   
+//			type : "POST", 		 
+//			dataType : "json",	   
+//			
+//			data : {
+//				mid:mid,
+//			},				
+//			success : function(data) { console.log("下载访问成功");},
+//   			error:function(data){console.log("下载访问失败");}
+// 	 	}); 
+// 	});  
+
 	
 });

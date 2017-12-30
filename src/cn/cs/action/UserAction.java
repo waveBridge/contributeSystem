@@ -248,9 +248,13 @@ public class UserAction extends ActionSupport {
 		
 		JSONObject json = new JSONObject();
 		try{
+			
+			System.out.println(uploadFileName + " " + uploadContentType);
 			//String materialName = request.getParameter("materialName");
 			String flag = userService.upFile(maximumSize,allowedTypes,upload,uploadFileName,uploadContentType);
 			json.put("msg", flag);		//0失败  1成功  -1文件过大  -2文件类型不匹配
+			response.sendRedirect("Writer-search.html");
+			//return "success";
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -279,6 +283,10 @@ public class UserAction extends ActionSupport {
 			String mid = request.getParameter("mid");
 			String flag = userService.changeFile(maximumSize,allowedTypes,upload,uploadFileName,uploadContentType,mid);
 			json.put("msg", flag);			//0失败  1成功  -1文件过大  -2文件类型不匹配
+			
+			response.sendRedirect("Writer-search.html");
+			
+			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			json.put("msg", "0");

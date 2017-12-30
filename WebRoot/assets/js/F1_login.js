@@ -1,6 +1,6 @@
 window.onload = function(){  
     var cli = document.getElementById("click"); 
-    var pass = document.getElementById("pass"); 
+    var pass = document.getElementById("password1"); 
     cli.onclick = function(){  
         if(pass.type == "text"){
             pass.type = "password";
@@ -15,7 +15,7 @@ window.onload = function(){
 
 function validateForm(){
     var user = document.getElementById("username").value;
-    var pass = document.getElementById("pass").value;
+    var pass = document.getElementById("password1").value;
     if (user == null || user == "" || pass == null || pass == "" ){
         alert("账号、密码不能为空！");
         return false;

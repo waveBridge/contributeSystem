@@ -15,7 +15,9 @@
 
     <script src="assets/js/jquery-2.1.1.js"></script>
     <script src="assets/js/bootstrap.js"></script>
-    <script src="assets/js/Writer-main-back.js"></script>
+    <!-- <script src="assets/js/Writer-search.js"></script> -->
+    <script src="assets/js/Writer-search-back.js"></script>
+    
 </head>
 <body>
 
@@ -63,10 +65,10 @@
         <div class="row ">
             <div class="col-md-12">
                 <ul class="nav nav-tabs">
-                    <li class="active">
+                    <li >
                         <a href="Writer-main.html">投稿</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="Writer-search.html">查询</a>
                     </li>
                     <li>
@@ -82,21 +84,28 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
         </div>
-        <div class="col-md-6">
-            <form action="upFileAction" method = "post" enctype = "multipart/form-data" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-7" data-genuitec-path="/CS/WebRoot/upFile.html" id="formFile" class="form-inline" role="form" enctype="multipart/form-data">
-                <div class="col-md-12"><br></div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="sr-only" for="inputfile">文件输入</label>
-                        <input type="file" id="inputfile" name="upload">
-                    </div>
-                </div>
-                <div class="col-md-8"><br>
-                    <button type="submit" class="btn btn-default">提交</button>
-                </div>
-            </form>
+        <div class="col-md-8">
+            <table class="table table-striped">
+                <caption>我的作品</caption>
+                <thead>
+                    <tr>
+                        <th>文件名</th>
+                        <th>作者</th>
+                        <th>时间</th>
+                        <th>状态</th>
+                        <th>下载</th>
+                        <th>更新文件</th>
+                    </tr>
+                </thead>
+                <tbody id = "show_all">
+                    
+                </tbody>
+            </table>  
+
+
+
         </div>
     </div>
 
@@ -117,6 +126,3 @@
 
 </body>
 </html>
-
-
-<form action = "upFileAction" method = "post" enctype = "multipart/form-data" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-7" data-genuitec-path="/CS/WebRoot/upFile.html">

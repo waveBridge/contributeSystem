@@ -6,9 +6,10 @@
   <link href="assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
   <link href="assets/css/signin.css" rel="stylesheet">
+  <script type = "text/javascript" src="assets/js/jquery-2.1.1.js"></script>
+  <script type = "text/javascript" charset='utf-8' src="assets/js/jquery.js"></script>
   <script type = "text/javascript" src="assets/js/ie-emulation-modes-warning.js"></script>
-  <script type = "text/javascript" src="assets/js/jquery-2.1.1.min.js"></script>
-  <script type="text/javascript" src="assets/js/login.js"></script>
+  <script type = "text/javascript" src="assets/js/login-back.js"></script>
 </head>
 <body>
   <div class="container">
@@ -16,19 +17,19 @@
         <h2 class="form-signin-heading">天才投稿登录</h2>
         <div class="message">
          <label class="labels" for="username">用户名</label>
-         <input lang="no" type="text" class="formInput" id="username" name="username">
+         <input lang="no" type="text" class="formInput" id="username1" name="username">
         </div>
         <div class="message">
           <label class="labels" for="pass">密码</label>
-          <input lang="no" type="password" class="formInput" id="pass" name="pass"/>
+          <input lang="no" type="password" class="formInput" id="password1" name="password"/>
           <img id="click" src="assets/images/eye.png"/>
         </div>
         <div class="rem">
           <input type="checkbox" value="remember-me"> 
           <p>记住密码</p>
-          <a href="">忘记密码？</a>
+          <a href="Writer-regiter.html">注册</a>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" id="btn">登录</button>
+        <button class="btn btn-lg btn-primary btn-block"  type="button" onclick="denglu()">登录</button>
       </form>
     </div>
     
