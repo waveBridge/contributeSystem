@@ -287,4 +287,34 @@ public class UserService {
 		}
 	}
 	
+	//修改密码
+	public boolean changePass(String oldPass, String newPass) {
+		System.out.println("changePass...service...");
+		
+		try{
+			HttpSession session = ServletActionContext.getRequest().getSession();
+			int uid = (int)session.getAttribute("uid");
+			boolean flag = userDao.changePass(uid, oldPass, newPass);
+			return flag;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return false;
+		}		
+	}
+	
+	//修改个人信息
+	public boolean changeInfo(String nickname, String address, String resume) {
+		System.out.println("changeInfo...service...");
+		
+		try{
+			HttpSession session = ServletActionContext.getRequest().getSession();
+			int uid = (int) session.getAttribute("uid");
+			boolean flag = userDao.changeInfo(nickname, address, resume, uid);
+			return flag;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return false;
+		}
+	}
+	
 }

@@ -9,8 +9,7 @@ public class User {
 	private String  password;
 	private String  nickname;
 	private String  address;
-	private String  company;
-	private String  phone;
+	private String resume;
 	private String  email;
 	private Set<Material> materialSet = new HashSet<Material>();
 	
@@ -44,18 +43,6 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getCompany() {
-		return company;
-	}
-	public void setCompany(String company) {
-		this.company = company;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 	public String getEmail() {
 		return email;
 	}
@@ -67,6 +54,12 @@ public class User {
 	}
 	public void setMaterialSet(Set<Material> materialSet) {
 		this.materialSet = materialSet;
+	}
+	public String getResume() {
+		return resume;
+	}
+	public void setResume(String resume) {
+		this.resume = resume;
 	}
 	
 }

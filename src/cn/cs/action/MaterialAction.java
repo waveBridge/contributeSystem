@@ -6,16 +6,27 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.util.List;
+import java.util.Set;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import cn.cs.entity.Classify;
+import cn.cs.entity.Material;
 import cn.cs.service.MaterialService;
+import cn.cs.util.OrderUtil;
+import cn.cs.util.Redundant;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+import net.sf.json.util.CycleDetectionStrategy;
 
 public class MaterialAction extends ActionSupport {
 	
@@ -93,6 +104,94 @@ public class MaterialAction extends ActionSupport {
 				json.put("msg", "0");
 			} else {
 				json.put("msg", "1");
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg", "0");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
+		return null;
+	}
+	
+	//得到所有分类的稿件
+	public String getClassifyMaterial() throws IOException{
+		System.out.println("getEmpolyMaterial...action...");
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+		
+		JSONObject json = new JSONObject();
+		JSONArray json2;
+		try{
+			List<Classify> classifyList = materialService.getClassifyList();
+			if(classifyList == null){
+				json.put("msg", "0");
+			} else {
+				if(session.getAttribute("aid") == null){				//不是管理员
+					for(Classify c : classifyList){
+						//筛选出已录用的
+						Redundant.haveEmployed(c.getMaterialSet());
+						Redundant.redundant(c.getMaterialSet());	//去除冗余
+					}
+				} else {
+					for(Classify c : classifyList){
+						Redundant.redundant(c.getMaterialSet());	//去除冗余
+					}
+				}
+
+				json2 = JSONArray.fromObject(classifyList, jsonConfig);
+				json.put("msg", json2);
+				json.put("cnt", classifyList.size());
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg", "0");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
+		return null;
+	}
+	
+	//查看稿件详情
+	public String getDetail() throws IOException{
+		System.out.println("getDetail...action...");
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+		JSONObject json = new JSONObject(); 
+		JSONObject json2;
+		try{
+			String mid = request.getParameter("mid");
+			Material material = materialService.getDetail(mid);
+			if(material == null){
+				json.put("msg", "0");
+			} else {
+				Redundant.redundant(material);			//去除冗余		
+				//if(session.getAttribute("aid") == null){
+					//不是管理员，要去掉所属作者的未录用书籍
+					Redundant.haveEmployed(material);
+				//}
+				
+				json2 = JSONObject.fromObject(material, jsonConfig);
+				json.put("msg", json2);
 			}
 		} catch (Exception e) {
 			System.out.println(e.toString());

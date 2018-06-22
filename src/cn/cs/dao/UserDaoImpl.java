@@ -127,5 +127,42 @@ public class UserDaoImpl implements UserDao {
 			return false;
 		}
 	}
+
+	//修改密码
+	@Override
+	public boolean changePass(int uid, String oldPass, String newPass) {
+		System.out.println("changePass...dao...");
+		
+		try{
+			User user = hibernateTemplate.get(User.class, uid);
+			if(user.getPassword().equals(oldPass)){
+				user.setPassword(newPass);
+				hibernateTemplate.update(user);
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return false;
+		}		
+	}
+
+	//修改个人信息
+	@Override
+	public boolean changeInfo(String nickname, String address, String resume, int uid) {
+		System.out.println("changeInfo...dao...");
+		
+		try{
+			User user = hibernateTemplate.get(User.class, uid);
+			user.setNickname(nickname);
+			user.setAddress(address);
+			user.setResume(resume);
+			hibernateTemplate.update(user);
+			return true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return false;
+		}
+	}
 	
 }

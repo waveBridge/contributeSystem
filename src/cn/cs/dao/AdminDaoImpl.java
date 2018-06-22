@@ -18,19 +18,19 @@ public class AdminDaoImpl implements AdminDao {
 	
 	//根据账号密码查询
 	@Override
-	public boolean searchAdmin(String adminName, String password) {
+	public int searchAdmin(String adminName, String password) {
 		System.out.println("searchAdmin...dao...");
 		try{
 			@SuppressWarnings("unchecked")
 			List<Admin> adminList = (List<Admin>) hibernateTemplate.find("from Admin where adminName = ? and password = ?", adminName,password);
 			if(adminList.size() == 0){
-				return false;
+				return 0;
 			} else{
-				return true;
+				return adminList.get(0).getAid();
 			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
-			return false;
+			return 0;
 		}
 
 	}
@@ -87,5 +87,22 @@ public class AdminDaoImpl implements AdminDao {
 			System.out.println(e.toString());
 			return null;
 		}
+	}
+
+	//根据稿件名进行查询
+	@Override
+	public List<Material> getMaterialByName(String materialName) {
+		System.out.println("getMaterialByName...dao...");
+		
+		try{
+			@SuppressWarnings("unchecked")
+			List<Material> materialList = (List<Material>) hibernateTemplate.find("from Material where materialName like ?", "%" + materialName + "%");
+			System.out.println(materialList.size() + "  sdsdsdsdsds");
+			return materialList;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+
 	}
 }

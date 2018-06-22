@@ -21,9 +21,8 @@
 		<property name="password" column="password"></property>
 		<property name="nickname" column="nickname"></property>
 		<property name="address" column="address"></property>
-		<property name="company" column="company"></property>
-		<property name="phone" column="phone"></property>
 		<property name="email" column="email"></property>
+		<property name="resume" column="resume"></property>
 		
 		<!-- 4:配一对多的关系 -->
 		<set name="materialSet" cascade="save-update,delete" inverse="true" lazy="false">

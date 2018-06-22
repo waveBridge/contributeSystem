@@ -17,4 +17,9 @@ public interface UserDao {
 	public boolean upFile(int uid, Material material);
 
 	public boolean changeFile(int mid, String materialName, String rePath, String date);
+
+	public boolean changePass(int uid, String oldPass, String newPass);
+
+	public boolean changeInfo(String nickname, String address, String resume, int uid);
+
 }

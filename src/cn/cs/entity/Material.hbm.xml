@@ -18,6 +18,7 @@
 
 		<!-- 3:配置其他属性和表的字段对应 -->
 		<property name="materialName" column="materialName"></property>
+		<property name="materialResume" column="materialResume"></property>
 		<property name="url" column="url"></property>
 		<property name="state" column="state"></property>
 		<property name="date" column="date" type="string"></property>

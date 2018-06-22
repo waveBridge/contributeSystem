@@ -3,8 +3,8 @@ url	:	loginAction
 in	:	username,password   (需要前端提前判断是否为空)
 out	:	登陆成功("msg":"1")  登录失败("msg":"0")
 
-//注销登录
-url	:	userLogoutAction
+//注销登录（用户和管理员注销都访问这个）
+url	:	logoutAction
 in	:	无
 out	:	注销成功("msg":"1")，此时前端跳到登录界面	注销失败("msg":"0")
 
@@ -18,6 +18,22 @@ url	:	registerAction
 in	:	username,password,nickname,email,vcode,company,address,phone (姓名，密码，昵称，邮箱，验证码,单位，地址，手机) 输入两次密码是否一致前端判断
 out	:	用户名重复("msg":"3")	验证码错误或失效("msg":"2")		服务器原因注册失败("msg":"0")	注册成功("msg":"1") 
 
+//修改密码
+url	:	changePassAction
+in	:	oldPass, newPass   (对应旧密码与新密码)
+out	:	修改成功("msg":"1")			修改失败("msg":"0");
+
+//修改个人信息
+url	:	changeInfo
+in	:	nickname, address, resume	(对应昵称、通讯地址、个人简介，注意个人简介不能超过500字)
+out	:	修改成功("msg":"1", "nickname":"昵称", "address":"地址", "resume":"个人简介")
+
+//获取所有分类的稿件（后台自动区分管理员或者普通用户，普通用户只能得到录用的，管理员能得到所有的）
+url	:	getClassifyMaterialAction
+in	:	无
+out	:	获取失败("msg":"0")	获取成功("cnt":"分类个数","msg":一个List，存放了分类，每个分类下又有对应的已录用稿件)
+
+
 //获取当前用户的稿件
 url :	getMaterialAction
 in	:	无输入
@@ -28,7 +44,7 @@ url	:	upFileAction
 in	:	materialName(稿件的名字)  upload(表单里file的name)
 out	:	上传成功("msg","1")   文件过大("msg","-1")   文件类型不匹配("msg","-2")   未知错误("msg","0")
 
-//用户修改稿件
+//用户修改稿件（不用了）
 url	:	changeFileAction
 in 	:	upload(文件)   mid(稿件id)
 out :	修改成功("msg","1")   文件过大("msg","-1")   文件类型不匹配("msg","-2")   未知错误("msg","0")
@@ -43,14 +59,19 @@ url	：	adminLoginAction
 in	:	adminName, password		(管理员账号密码)
 out :	登陆成功("msg":"1")  登录失败("msg":"0")
 
-//查看所有用户的材料
+//查看所有用户的材料（后台自动区分管理员或者普通用户，普通用户只能得到录用的，管理员能得到所有的）
 url :	getAllMaterialAction
 in 	:	无
 out :	错误("msg","-1")   成功返回信息("cnt":"稿件数量","msg":[{稿件各种属性以及所属用户}])
 
-//根据用户名查询材料
+//根据用户名查询材料（后台自动区分管理员或者普通用户，普通用户只能得到录用的，管理员能得到所有的）
 utl ：	getMaterialByAuthorAction
 int	:	nickname     昵称
+out : 	错误("msg","-1")   成功返回信息("cnt":"稿件数量","msg":[{稿件各种属性以及所属用户}])
+
+//根据稿件名查询材料（后台自动区分管理员或者普通用户，普通用户只能得到录用的，管理员能得到所有的）
+utl ：	getMaterialByNameAction
+int	:	materialName     昵称
 out : 	错误("msg","-1")   成功返回信息("cnt":"稿件数量","msg":[{稿件各种属性以及所属用户}])
 
 //根据状态查询材料

@@ -18,6 +18,7 @@ import cn.cs.entity.Material;
 import cn.cs.entity.User;
 import cn.cs.service.UserService;
 import cn.cs.util.OrderUtil;
+import cn.cs.util.Redundant;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -152,8 +153,6 @@ public class UserAction extends ActionSupport {
 			String email 	= request.getParameter("email");
 			String vcode 	= request.getParameter("vcode");
 			String address 	= request.getParameter("address");
-			String company 	= request.getParameter("company");
-			String phone 	= request.getParameter("phone");
 			
 			//先查找该用户名是否被注册
 			boolean flag = userService.searchUser(username);
@@ -171,9 +170,7 @@ public class UserAction extends ActionSupport {
 					user.setNickname(nickname);
 					user.setEmail(email);
 					user.setAddress(address);
-					user.setPhone(phone);
-					user.setCompany(company);
-					
+
 					boolean flag2 =userService.register(user);
 					
 					if(flag2 == true) {
@@ -199,6 +196,75 @@ public class UserAction extends ActionSupport {
 		
 		return null;
 	}
+	
+	//修改密码
+	public String changePass() throws IOException{
+		System.out.println("changePass...action...");
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		
+		JSONObject json = new JSONObject();
+		try{
+			String oldPass = request.getParameter("oldPass");
+			String newPass = request.getParameter("newPass");
+			
+			boolean flag = userService.changePass(oldPass, newPass);
+			if(flag == true){
+				json.put("msg", "1");
+			} else {
+				json.put("msg", "0");
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg", "0");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
+		return null;
+	}
+	
+	//修改个人信息
+	public String changeInfo() throws IOException{
+		System.out.println("changeInfo...action...");
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		
+		JSONObject json = new JSONObject();		
+		try{
+			String nickname = request.getParameter("nickname");
+			String address = request.getParameter("address");
+			String resume = request.getParameter("resume");
+			
+			boolean flag = userService.changeInfo(nickname, address, resume);
+			if(flag == false){
+				json.put("msg", "0");
+			} else {
+				json.put("msg", "1");
+				json.put("nickname", nickname);
+				json.put("address", address);
+				json.put("resume", resume);
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg", "0");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
+		return null;
+	}
+	
 	
 	//获取当前该用户的稿件
 	public String getMaterial() throws IOException {
@@ -272,7 +338,7 @@ public class UserAction extends ActionSupport {
 		return null;
 	}
 	
-	//修改稿件
+	//修改稿件（未使用）
 	public String changeFile() throws IOException{
 		System.out.println("changeFile...action...");
 		
@@ -304,7 +370,7 @@ public class UserAction extends ActionSupport {
 	}
 	
 	//登出
-	public String userLogout() throws IOException{
+	public String logout() throws IOException{
 		System.out.println("changeFile...action...");
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -317,6 +383,7 @@ public class UserAction extends ActionSupport {
 		try{
 			HttpSession session = ServletActionContext.getRequest().getSession();
 			session.removeAttribute("uid");
+			session.removeAttribute("aid");
 			json.put("msg", "1");
 		} catch (Exception e) {
 			System.out.println(e.toString());

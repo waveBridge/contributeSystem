@@ -30,8 +30,16 @@ public class AdminService {
 		System.out.println("adminLogin...service...");
 		
 		try{
-			boolean flag = adminDao.searchAdmin(adminName, password);
-			return flag;
+			int aid = adminDao.searchAdmin(adminName, password);
+			System.out.println("aid == " + aid);
+			if(aid == 0){
+				return false;
+			} else {
+				HttpSession session = ServletActionContext.getRequest().getSession();
+				session.removeAttribute("uid");
+				session.setAttribute("aid", aid);
+				return true;
+			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			return false;
@@ -78,5 +86,18 @@ public class AdminService {
 			System.out.println(e.toString());
 			return null;
 		}
+	}
+
+	//根据材料名进行模糊查询
+	public List<Material> getMaterialByName(String materialName) {
+		System.out.println("getMaterialByName...service...");
+		
+		try{
+			List<Material> materialSet = adminDao.getMaterialByName(materialName);
+			return materialSet;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}		
 	}
 }

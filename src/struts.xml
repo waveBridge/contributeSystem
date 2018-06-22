@@ -30,6 +30,10 @@
 		<action name="getAllMaterialAction" class = "adminAction" method="getAllMaterial"></action>
 		<action name="getMaterialByAuthorAction" class = "adminAction" method="getMaterialByAuthor"></action>
 		<action name="getMaterialByStateAction" class = "adminAction" method="getMaterialByState"></action>
+		<action name="getMaterialByNameAction" class = "adminAction" method="getMaterialByName"></action>
 		<action name="changeStateAction" class = "materialAction" method="changeState"></action>
+		<action name="getClassifyMaterialAction" class = "materialAction" method="getClassifyMaterial"></action>
+		<action name="getDetailAction" class = "materialAction" method="getDetail"></action>
+		
 	</package>
 </struts>

@@ -1,23 +1,14 @@
 package cn.cs.service;
 
-import java.io.File;
-import java.util.Calendar;
-import java.util.Set;
+import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder.In;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.struts2.ServletActionContext;
 import org.springframework.transaction.annotation.Transactional;   //注意事务的配置引入的包一定不要错
 
 import cn.cs.dao.MaterialDao;
-import cn.cs.dao.UserDao;
+import cn.cs.entity.Classify;
 import cn.cs.entity.Material;
-import cn.cs.entity.User;
 import cn.cs.util.MailUtil;
 import cn.cs.util.TimeUtil;
-import javassist.bytecode.stackmap.BasicBlock.Catch;
 
 @Transactional
 public class MaterialService {
@@ -104,6 +95,32 @@ public class MaterialService {
 		}
 	}
 	
+	//得到所有分类的已录用的稿件
+	public List<Classify> getClassifyList() {
+		System.out.println("getEmpolyMaterial...service...");
+		
+		try{
+			List<Classify> classifyList = materialDao.getClassifyList();
+			return classifyList;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
+	
+	//查看稿件详情
+	public Material getDetail(String mids) {
+		System.out.println("getDetail..service...");
+		
+		try{
+			int mid = Integer.parseInt(mids);
+			Material material = materialDao.getDetail(mid);
+			return material;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}		
+	}
 	
 	
 }

@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import cn.cs.entity.Classify;
 import cn.cs.entity.Material;
 import cn.cs.entity.User;
 
@@ -59,5 +60,34 @@ public class MaterialDaoImpl implements MaterialDao {
 			System.out.println(e.toString());
 			return "-1";
 		}	
+	}
+
+	//得到所有分类的视频
+	@Override
+	public List<Classify> getClassifyList() {
+		System.out.println("getClassifyList...dao...");
+		
+		try{
+			@SuppressWarnings("unchecked")
+			List<Classify> classifyList = (List<Classify>) hibernateTemplate.find("from Classify");
+			return classifyList;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}
+	}
+
+	//得到详情
+	@Override
+	public Material getDetail(int mid) {
+		System.out.println("getDetail...dao...");
+		
+		try{
+			Material material = hibernateTemplate.get(Material.class, mid);
+			return material;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}		
 	}
 }

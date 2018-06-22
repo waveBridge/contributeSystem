@@ -3,6 +3,7 @@ package cn.cs.entity;
 public class Material {
 	private Integer mid;
 	private String  materialName;
+	private String materialResume;
 	private String  url;
 	private Integer state;
 	private String  date;
@@ -50,5 +51,11 @@ public class Material {
 	}
 	public void setClassify(Classify classify) {
 		this.classify = classify;
+	}
+	public String getMaterialResume() {
+		return materialResume;
+	}
+	public void setMaterialResume(String materialResume) {
+		this.materialResume = materialResume;
 	}
 }

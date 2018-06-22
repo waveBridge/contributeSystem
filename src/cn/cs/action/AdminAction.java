@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.json.Json;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -105,6 +106,7 @@ public class AdminAction extends ActionSupport {
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpSession session = request.getSession();
 		response.setContentType("application/json;charset=utf-8");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();
@@ -121,10 +123,58 @@ public class AdminAction extends ActionSupport {
 			if(materialSet == null){
 				json.put("msg", "-1");
 			} else {
+				if(session.getAttribute("aid") == null){
+					Redundant.haveEmployed(materialSet);
+				}
 				List<Material> materials = OrderUtil.sort(materialSet);
 				materials = Redundant.redundant(materials);
 				json.put("cnt", materials.size());
 				json2 = JSONArray.fromObject(materials, jsonConfig);
+				json.put("msg", json2);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg", "-1");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
+		
+		return null;
+	}
+	
+	//根据稿件名查询
+	public String getMaterialByName() throws IOException{
+		System.out.println("getMaterialByName...action...");
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpSession session = request.getSession();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		
+		//设置jsonConfig是为了摆脱死循环，因为是级联关系
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);  
+		
+		JSONObject json = new JSONObject();
+		JSONArray json2;
+		try{
+			String materialName = request.getParameter("materialName");
+			List<Material> materialList = adminService.getMaterialByName(materialName);
+			if(materialList == null){
+				json.put("msg", "-1");
+			} else {
+				if(session.getAttribute("aid") == null){
+					Redundant.haveEmployed(materialList);
+				}
+				materialList = OrderUtil.sort(materialList);
+				materialList = Redundant.redundant(materialList);
+				json.put("cnt", materialList.size());
+				json2 = JSONArray.fromObject(materialList, jsonConfig);
 				json.put("msg", json2);
 			}
 			
