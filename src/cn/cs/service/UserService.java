@@ -43,6 +43,7 @@ public class UserService {
 			} else {
 				HttpSession session = ServletActionContext.getRequest().getSession();
 				session.setAttribute("uid", uid);
+				session.removeAttribute("aid");
 				return true;
 			}
 			

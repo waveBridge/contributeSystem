@@ -15,6 +15,8 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import cn.cs.entity.Material;
 import cn.cs.service.AdminService;
+import cn.cs.util.OrderUtil;
+import cn.cs.util.Redundant;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -75,10 +77,12 @@ public class AdminAction extends ActionSupport {
 		JSONObject json = new JSONObject();
 		JSONArray json2;
 		try{
-			List<Material> materialList = adminService.getAllMaterial();
-			if(materialList == null){
+			List<Material> materials = adminService.getAllMaterial();
+			materials = Redundant.redundant(materials);
+			if(materials == null){
 				json.put("msg", "-1");						    //错误
 			} else {
+				List<Material> materialList = OrderUtil.sort(materials);
 				json.put("cnt", materialList.size());			//放入信息
 				json2 = JSONArray.fromObject(materialList,jsonConfig);
 				json.put("msg", json2);
@@ -117,8 +121,10 @@ public class AdminAction extends ActionSupport {
 			if(materialSet == null){
 				json.put("msg", "-1");
 			} else {
-				json.put("cnt", materialSet.size());
-				json2 = JSONArray.fromObject(materialSet, jsonConfig);
+				List<Material> materials = OrderUtil.sort(materialSet);
+				materials = Redundant.redundant(materials);
+				json.put("cnt", materials.size());
+				json2 = JSONArray.fromObject(materials, jsonConfig);
 				json.put("msg", json2);
 			}
 			
@@ -156,6 +162,8 @@ public class AdminAction extends ActionSupport {
 			if(materialList == null) {
 				json.put("msg", "-1");
 			} else{
+				materialList = OrderUtil.sort(materialList);
+				materialList = Redundant.redundant(materialList);
 				json.put("cnt", materialList.size());
 				json2 = JSONArray.fromObject(materialList, jsonConfig);
 				json.put("msg", json2);

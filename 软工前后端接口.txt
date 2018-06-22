@@ -3,6 +3,11 @@ url	:	loginAction
 in	:	username,password   (需要前端提前判断是否为空)
 out	:	登陆成功("msg":"1")  登录失败("msg":"0")
 
+//注销登录
+url	:	userLogoutAction
+in	:	无
+out	:	注销成功("msg":"1")，此时前端跳到登录界面	注销失败("msg":"0")
+
 //用户注册请求发送邮箱验证码
 url	：	getVCodeAction	
 in	:	email               (邮箱地址)需要前端判断邮箱格式是否正确

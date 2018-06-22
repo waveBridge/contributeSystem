@@ -24,7 +24,7 @@
 
 		<!-- 4:配多对一的关系 -->
 		<many-to-one name="user" class = "cn.cs.entity.User" column = "uid" lazy="false"></many-to-one>
-	
+		<many-to-one name="classify" class = "cn.cs.entity.Classify" column = "cid" lazy="false"></many-to-one>
 
 	</class>
 </hibernate-mapping>

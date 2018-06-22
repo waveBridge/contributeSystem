@@ -7,6 +7,7 @@ public class Material {
 	private Integer state;
 	private String  date;
 	private User 	user;
+	private Classify classify;
 	
 	public Integer getMid() {
 		return mid;
@@ -43,5 +44,11 @@ public class Material {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public Classify getClassify() {
+		return classify;
+	}
+	public void setClassify(Classify classify) {
+		this.classify = classify;
 	}
 }

@@ -45,10 +45,6 @@ public class AdminService {
 		
 		try{
 			List<Material> materialList = adminDao.getAllMaterial();
-			for(Material m : materialList){
-				m.getUser().setMaterialSet(null);
-			}
-			
 			return materialList;
 		} catch (Exception e) {
 			System.out.println(e.toString());

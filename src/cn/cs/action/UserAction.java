@@ -3,10 +3,12 @@ package cn.cs.action;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -15,6 +17,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import cn.cs.entity.Material;
 import cn.cs.entity.User;
 import cn.cs.service.UserService;
+import cn.cs.util.OrderUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -216,11 +219,12 @@ public class UserAction extends ActionSupport {
 		
 		try{
 			Set<Material> materialSet = userService.getMaterials();
+			List<Material> materialList = OrderUtil.sort(materialSet);
 			if(materialSet == null){
 				json.put("msg", "-1");								//null
 			} else{
-				json.put("cnt", materialSet.size());				//材料数量
-				json2 = JSONArray.fromObject(materialSet, jsonConfig);
+				json.put("cnt", materialList.size());				//材料数量
+				json2 = JSONArray.fromObject(materialList, jsonConfig);
 				json.put("msg", json2);								//材料列表
 			}
 			
@@ -296,6 +300,32 @@ public class UserAction extends ActionSupport {
 			out.close();
 		}
 		
+		return null;
+	}
+	
+	//登出
+	public String userLogout() throws IOException{
+		System.out.println("changeFile...action...");
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		
+		JSONObject json = new JSONObject();
+		try{
+			HttpSession session = ServletActionContext.getRequest().getSession();
+			session.removeAttribute("uid");
+			json.put("msg", "1");
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg", "0");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
 		return null;
 	}
 	
