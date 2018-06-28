@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import cn.cs.entity.Material;
+import cn.cs.entity.User;
 
 public class Redundant {
 	public static List<Material> redundant(List<Material> materials){
@@ -90,6 +91,20 @@ public class Redundant {
 			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
+		}
+	}
+
+	//user去冗余
+	public static User redundant(User user) {
+		System.out.println("redundant...user...");
+		
+		try{
+			user.setMaterialSet(null);
+			user.setPassword(null);
+			return user;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
 		}
 	}
 

@@ -3,6 +3,11 @@ url	:	loginAction
 in	:	username,password   (需要前端提前判断是否为空)
 out	:	登陆成功("msg":"1")  登录失败("msg":"0")
 
+//得到当前用户基本信息
+url	:	getUserInfoAction
+in	:	无
+out	:	("msg":用户基本信息)    失败（"msg":"0"）
+
 //注销登录（用户和管理员注销都访问这个）
 url	:	logoutAction
 in	:	无
@@ -36,12 +41,17 @@ out	:	获取失败("msg":"0")	获取成功("cnt":"分类个数","msg":一个List
 
 //获取当前用户的稿件
 url :	getMaterialAction
-in	:	无输入
-out :	返回该用户稿件("msg":[{稿件的各种属性}],"cnt":"稿件数量")
+in	:	state (根据state获取当前用户不同状态的稿件，0为未审核，1为已通过，2为未通过，3为全部稿件)
+out :	返回该用户稿件("msg":[{稿件的各种属性}],"cnt":"稿件数量")  ("msg":"-1")失败
+
+//模糊查询当前用户的稿件
+url	:	userGetMByNameAction
+in	:	materialName(稿件名)
+out	:	("msg":"0")失败   		("msg":[{稿件属性}], "cnt":"稿件数量")
 
 //用户上传稿件
 url	:	upFileAction
-in	:	materialName(稿件的名字)  upload(表单里file的name)
+in	:	materialName(稿件的名字) materialResume（稿件简介，注意不要超过100个字） cid（类型编号）  upload(表单里file的name)
 out	:	上传成功("msg","1")   文件过大("msg","-1")   文件类型不匹配("msg","-2")   未知错误("msg","0")
 
 //用户修改稿件（不用了）

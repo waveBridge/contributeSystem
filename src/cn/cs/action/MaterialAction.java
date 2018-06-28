@@ -49,7 +49,7 @@ public class MaterialAction extends ActionSupport {
 		try{
 			String mid = request.getParameter("mid");		//材料id
 			String mUrl = materialService.getMUrl(mid);		//获取材料的url
-			String mName = materialService.getMName(mid);	//获取投稿名
+			String mName = mUrl.substring(7, mUrl.length());
 			
 			//防止中文乱码
 			if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {  

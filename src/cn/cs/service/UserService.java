@@ -1,8 +1,7 @@
 package cn.cs.service;
 
 import java.io.File;
-import java.util.Calendar;
-import java.util.Set;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +14,6 @@ import cn.cs.entity.Material;
 import cn.cs.entity.User;
 import cn.cs.util.MailUtil;
 import cn.cs.util.TimeUtil;
-import javassist.bytecode.stackmap.BasicBlock.Catch;
 
 @Transactional
 public class UserService {
@@ -33,23 +31,23 @@ public class UserService {
 	}
 	
 	//登录
-	public boolean login(String username, String password) {
+	public User login(String username, String password) {
 		System.out.println("login...service...");
 		
 		try{
-			int uid = userDao.searchUser(username, password);
-			if(uid == 0){
-				return false;
+			User user = userDao.searchUser(username, password);
+			if(user == null){
+				return null;
 			} else {
 				HttpSession session = ServletActionContext.getRequest().getSession();
-				session.setAttribute("uid", uid);
+				session.setAttribute("uid", user.getUid());
 				session.removeAttribute("aid");
-				return true;
+				return user;
 			}
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
-			return false;
+			return null;
 		}
 		
 	}
@@ -137,7 +135,7 @@ public class UserService {
 	}
 	
 	//查看当前用户的所有材料
-	public Set<Material> getMaterials() {
+	public List<Material> getMaterials(String state) {
 		System.out.println("getMaterials...service...");
 		
 		try{
@@ -146,7 +144,7 @@ public class UserService {
 			int uid = (int)session.getAttribute("uid");
 			
 			//根据uid获取材料
-			Set<Material> materialSet = userDao.getMaterials(uid);
+			List<Material> materialSet = userDao.getMaterials(uid, Integer.parseInt(state));
 			return materialSet;
 			
 		} catch (Exception e) {
@@ -158,9 +156,10 @@ public class UserService {
 	
 	//上传文件
 	public String upFile(long maximumSize, String allowedTypes, File upload, String uploadFileName,
-			String uploadContentType) {
+			String materialResume, int cid, String uploadContentType ) {
 		System.out.println("upFile...service...");
 		HttpSession session = ServletActionContext.getRequest().getSession();
+		int uid = (int)session.getAttribute("uid");
 		
 		try{
 			//新建文件
@@ -187,7 +186,12 @@ public class UserService {
 	            if (flag == false) {  
 	                return "-2";                 					    //文件格式错误
 	            } else {
+	            	//在系统中存储的文件名为： uid "x" 时间  "x" 文件名  避免覆盖  
+	            	String tmpFileName = uploadFileName;
+	            	uploadFileName = uid + "x"+ timeUtil.getTime() + "x" + uploadFileName;
 	            	String path = uploadFile.getPath()+ "\\" + uploadFileName;
+
+	            	System.out.println("准备上传了啊");
 	            	
 	            	//准备上传
 		            FileUtils.copyFile(upload, new File(path));  
@@ -198,16 +202,19 @@ public class UserService {
 		            String rePath = "upload" + "\\" + uploadFileName;
 		            
 		            //去掉后缀
-		            String[] materialNameArray = uploadFileName.split("\\.");
+		            String[] materialNameArray = tmpFileName.split("\\.");
 		            String materialName = materialNameArray[0];
 		            Material material = new Material();
 		            material.setMaterialName(materialName);
 		            material.setState(0);							//待审核
 		            material.setUrl(rePath);
 		            material.setDate(timeUtil.getTimeByForm());
+		            material.setMaterialResume(materialResume);
+		            
+		            System.out.println("已经上传好了啊");
 		            
 		            //写入数据库
-		            boolean flag2 = userDao.upFile((int)session.getAttribute("uid"), material);
+		            boolean flag2 = userDao.upFile((int)session.getAttribute("uid"), cid, material);
 		            if(flag2 == false) {
 		            	return "0";                  //失败
 		            } else { 
@@ -315,6 +322,36 @@ public class UserService {
 			System.out.println(e.toString());
 			return false;
 		}
+	}
+	
+	//根据稿件名进行搜索
+	public List<Material> getMaterialByName(String materialName) {
+		System.out.println("getMaterialByName...service...");
+		
+		try{
+			HttpSession session = ServletActionContext.getRequest().getSession();
+			int uid = (int) session.getAttribute("uid");
+			List<Material> materialList = userDao.getMaterialByName(uid, materialName);
+			return materialList;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}	
+	}
+	
+	//得到当前用户的基本信息
+	public User getUserInfo() {
+		System.out.println("getUserInfo...service...");
+		
+		try{
+			HttpSession session = ServletActionContext.getRequest().getSession();
+			int uid = (int)session.getAttribute("uid");
+			User user = userDao.getUserInfo(uid);
+			return user;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}		
 	}
 	
 }

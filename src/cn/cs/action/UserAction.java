@@ -79,16 +79,22 @@ public class UserAction extends ActionSupport {
 		PrintWriter out = response.getWriter();
 		
 		JSONObject json = new JSONObject();
+		//JSONObject json2;
+		//JsonConfig jsonConfig = new JsonConfig();
+		//jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+		
 		try{
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>username"+username+"   passwrod"+password);
 			
-			boolean flag = userService.login(username, password);
-			if(flag == true){
+			User user = userService.login(username, password);
+			if(user != null){
+				//user = Redundant.redundant(user);
+				//json2 = JSONObject.fromObject(user, jsonConfig);
 				json.put("msg", "1");							//允许登录
 			} else {
-				json.put("msg", "0");							//用户名活着密码错误
+				json.put("msg", "0");							//用户名或着密码错误
 			}
 			
 		} catch (Exception e) {
@@ -103,6 +109,40 @@ public class UserAction extends ActionSupport {
 		return null;
 	}
 	
+	//获取当前用户基本信息
+	public String getUserInfo() throws IOException{
+		System.out.println("getUserInfo...action...");		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		
+		JSONObject json = new JSONObject();
+		JSONObject json2;
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+		try{
+			User user = userService.getUserInfo();
+			if(user != null){
+				user = Redundant.redundant(user);
+				json2 = JSONObject.fromObject(user, jsonConfig);
+				json.put("msg", json2);							
+			} else {
+				json.put("msg", "0");							
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg", "0");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
+		return null;
+	}
+	 
 	//获取邮箱验证码
 	public String getVCode() throws IOException {
 		System.out.println("getVCode...action...");
@@ -284,9 +324,11 @@ public class UserAction extends ActionSupport {
 		JSONArray json2;
 		
 		try{
-			Set<Material> materialSet = userService.getMaterials();
-			List<Material> materialList = OrderUtil.sort(materialSet);
-			if(materialSet == null){
+			String state = request.getParameter("state");
+			List<Material> materialList = userService.getMaterials(state);
+			materialList = Redundant.redundant(materialList);
+			materialList = OrderUtil.sort(materialList);
+			if(materialList == null){
 				json.put("msg", "-1");								//null
 			} else{
 				json.put("cnt", materialList.size());				//材料数量
@@ -297,6 +339,48 @@ public class UserAction extends ActionSupport {
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			json.put("msg", "-1");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
+		
+		return null;
+	}
+	
+	//在当前用户的稿件中，按照稿件名搜索
+	public String userGetMByName() throws IOException{
+		System.out.println("userGetMByName...action...");
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		
+		//设置jsonConfig是为了摆脱死循环，因为是多对多级联关系
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+		
+		JSONObject json = new JSONObject();
+		JSONArray json2;
+		
+		try{
+			String materialName = request.getParameter("materialName");
+			List<Material> materialList = userService.getMaterialByName(materialName);
+			if(materialList == null){
+				json.put("msg", "0");
+			} else {
+				materialList = Redundant.redundant(materialList);
+				materialList = OrderUtil.sort(materialList);
+				
+				json2 = JSONArray.fromObject(materialList, jsonConfig);
+				json.put("msg", json2);
+				json.put("cnt", materialList.size());
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("msg", "0");
 		} finally {
 			out.write(json.toString());
 			out.flush();
@@ -318,10 +402,15 @@ public class UserAction extends ActionSupport {
 		
 		JSONObject json = new JSONObject();
 		try{
+			String materialName = request.getParameter("materialName");
+			String materialResume = request.getParameter("materialResume");
+			int cid = Integer.parseInt(request.getParameter("cid"));
 			
-			System.out.println(uploadFileName + " " + uploadContentType);
-			//String materialName = request.getParameter("materialName");
-			String flag = userService.upFile(maximumSize,allowedTypes,upload,uploadFileName,uploadContentType);
+			System.out.println(uploadFileName + " " + uploadContentType);	
+			materialName += "." + uploadFileName.split("\\.")[1];				//给文件名加上后缀					
+			
+			String flag = userService.upFile(maximumSize, allowedTypes, upload , materialName,
+												materialResume, cid, uploadContentType);
 			json.put("msg", flag);		//0失败  1成功  -1文件过大  -2文件类型不匹配
 			response.sendRedirect("Writer-search.html");
 			//return "success";

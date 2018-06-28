@@ -1,11 +1,10 @@
 package cn.cs.dao;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import cn.cs.entity.Classify;
 import cn.cs.entity.Material;
 import cn.cs.entity.User;
 
@@ -18,21 +17,21 @@ public class UserDaoImpl implements UserDao {
 	
 	//根据用户名密码查询用户
 	@Override
-	public int searchUser(String username, String password) {
+	public User searchUser(String username, String password) {
 		System.out.println("searchUser...dao...");
 		
 		try{
 			@SuppressWarnings("unchecked")
 			List<User> userList = (List<User>)hibernateTemplate.find("from User where username = ? and password = ?", username, password);
-			if(userList.size() == 0){
-				return 0;
+			if(userList == null || userList.size() == 0){
+				return null;
 			} else {
-				return userList.get(0).getUid();
+				return userList.get(0);
 			}
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
-			return 0;
+			return null;
 		}
 		
 	}
@@ -72,17 +71,28 @@ public class UserDaoImpl implements UserDao {
 
 	//根据用户id获取材料
 	@Override
-	public Set<Material> getMaterials(int uid) {
+	public List<Material> getMaterials(int uid, int state) {
 		System.out.println("getMaterials...dao...");
 		
-		try{
-			User user = hibernateTemplate.get(User.class, uid);
-			if(user == null) {
-				return null;
+		try{		
+			if(state == 3){
+				@SuppressWarnings("unchecked")
+				List<Material> materials = (List<Material>) hibernateTemplate.find("from Material where uid = ?", uid);
+				return materials;
 			} else {
-				Set<Material> materialSet = user.getMaterialSet();
-				return materialSet;
+				String q = "from Material where uid = ? and state = ?";
+				@SuppressWarnings("unchecked")
+				List<Material>	materials = (List<Material>) hibernateTemplate.find(q, uid, state);
+				return materials;
 			}
+			
+//			User user = hibernateTemplate.get(User.class, uid);
+//			if(user == null) {
+//				return null;
+//			} else {
+//				Set<Material> materialSet = user.getMaterialSet();
+//				return materialSet;
+//			}
 	
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -92,14 +102,20 @@ public class UserDaoImpl implements UserDao {
 
 	//上传文件
 	@Override
-	public boolean upFile(int uid, Material material) {
+	public boolean upFile(int uid,int cid, Material material) {
 		System.out.println("upFile...dao...");
 		
 		try{
 			User user = hibernateTemplate.get(User.class, uid);
 			user.getMaterialSet().add(material);
 			material.setUser(user);
+			
+			Classify classify = hibernateTemplate.get(Classify.class, cid);
+			classify.getMaterialSet().add(material);
+			material.setClassify(classify);
+			
 			hibernateTemplate.save(user);
+			hibernateTemplate.save(classify);
 			hibernateTemplate.save(material);
 			return true;
 		} catch (Exception e) {
@@ -162,6 +178,36 @@ public class UserDaoImpl implements UserDao {
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			return false;
+		}
+	}
+
+	//根据稿件名进行搜索
+	@Override
+	public List<Material> getMaterialByName(int uid, String materialName) {
+		System.out.println("getMaterialByName...dao...");
+		
+		try{
+			String q = "from Material where materialName like ? and uid = ?";
+			@SuppressWarnings("unchecked")
+			List<Material> materialList = (List<Material>) hibernateTemplate.find(q, "%" + materialName + "%", uid);
+			return materialList;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
+		}		
+	}
+
+	//获得当前用户的基本信息
+	@Override
+	public User getUserInfo(int uid) {
+		System.out.println("getUserInfo...dao...");
+		
+		try{
+			User user = hibernateTemplate.get(User.class, uid);
+			return user;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return null;
 		}
 	}
 	
