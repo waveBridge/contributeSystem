@@ -138,12 +138,14 @@ public class MaterialAction extends ActionSupport {
 				json.put("msg", "0");
 			} else {
 				if(session.getAttribute("aid") == null){				//不是管理员
+					System.out.println("aid  是null");
 					for(Classify c : classifyList){
 						//筛选出已录用的
-						Redundant.haveEmployed(c.getMaterialSet());
+						c.setMaterialSet(Redundant.haveEmployed(c.getMaterialSet()));
 						Redundant.redundant(c.getMaterialSet());	//去除冗余
 					}
 				} else {
+					System.out.println("aid 不是null");
 					for(Classify c : classifyList){
 						Redundant.redundant(c.getMaterialSet());	//去除冗余
 					}
@@ -185,10 +187,10 @@ public class MaterialAction extends ActionSupport {
 				json.put("msg", "0");
 			} else {
 				Redundant.redundant(material);			//去除冗余		
-				//if(session.getAttribute("aid") == null){
+				if(session.getAttribute("aid") == null){
 					//不是管理员，要去掉所属作者的未录用书籍
 					Redundant.haveEmployed(material);
-				//}
+				}
 				
 				json2 = JSONObject.fromObject(material, jsonConfig);
 				json.put("msg", json2);

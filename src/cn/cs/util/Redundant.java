@@ -1,5 +1,6 @@
 package cn.cs.util;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -25,8 +26,8 @@ public class Redundant {
 		System.out.println("Redundant...MaterialSet...");
 		try{
 			for(Material m : materials){
-				m.getUser().setMaterialSet(null);
-				m.getClassify().setMaterialSet(null);
+				m.setClassify(null);
+				m.setUser(null);
 			}
 			return materials;
 		} catch (Exception e) {
@@ -50,19 +51,23 @@ public class Redundant {
 		}
 	}
 
-	public static void haveEmployed(Set<Material> materialSet) {
+	public static Set<Material> haveEmployed(Set<Material> materialSet) {
 		System.out.println("haveEmployed...materialSet...");
 		
 		try{
+			Set<Material> materials = new HashSet<Material>();
+		
 			for(Material m : materialSet){
-				if(m.getState() != 1){
-					materialSet.remove(m);
+				if(m.getState() == 1){
+					materials.add(m);
 				}
 			}
+			
+			return materials;
 		} catch (Exception e) {
 			System.out.println(e.toString());
+			return null;
 		}
-
 	}
 	
 	public static void haveEmployed(List<Material> materialList) {
@@ -84,11 +89,13 @@ public class Redundant {
 		System.out.println("haveEmployed...material...");
 		
 		try{
+			Set<Material> materials = new HashSet<Material>();
 			for(Material m : material.getUser().getMaterialSet()){
-				if(m.getState() != 1){
-					material.getUser().getMaterialSet().remove(m);
+				if(m.getState() == 1){
+					materials.add(m);
 				}
 			}
+			material.getUser().setMaterialSet(materials);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
