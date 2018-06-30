@@ -390,12 +390,50 @@ public class UserAction extends ActionSupport {
 		return null;
 	}
 	
+	//由于技术限制，所以多了这么个action。上传稿件的页面，前端先访问此action，看是否为第一次到达页面。
+	public String upFileFlag() throws IOException{
+		System.out.println("upFileFlag...action...");
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("application/json;charset=utf-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		
+		JSONObject json = new JSONObject();
+		try{
+			HttpSession session = request.getSession();
+			String upFileFlag = (String) session.getAttribute("upFileFlag");
+			if(upFileFlag == null || (!upFileFlag.equals("1"))){
+				//为空， 或者不是"1"，那么就表示是用户第一次来到此页面
+				json.put("flag", "0");
+			} else if(upFileFlag.equals("1")){
+				//为"1"，说明用户已经上传过文件，此时要给前端返回信息
+				json.put("flag", "1");
+				json.put("msg", session.getAttribute("upFileMsg"));
+				session.removeAttribute("upFileFlag");		//同时要清空，不然再次上传文件时会出错
+				session.removeAttribute("upFileMsg");
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			json.put("flag", "0");
+		} finally {
+			out.write(json.toString());
+			out.flush();
+			out.close();
+		}
+		
+		return null;
+	}
+	
 	//上传稿件
 	public String upFile() throws IOException{
 		System.out.println("upFile...action...");
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpSession session = request.getSession();
 		response.setContentType("application/json;charset=utf-8");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();
@@ -406,22 +444,26 @@ public class UserAction extends ActionSupport {
 			String materialResume = request.getParameter("materialResume");
 			int cid = Integer.parseInt(request.getParameter("cid"));
 			
-			System.out.println(uploadFileName + " " + uploadContentType);	
+			System.out.println(uploadFileName + " " + uploadContentType + " " + cid);	
 			materialName += "." + uploadFileName.split("\\.")[1];				//给文件名加上后缀					
 			
 			String flag = userService.upFile(maximumSize, allowedTypes, upload , materialName,
 												materialResume, cid, uploadContentType);
 			json.put("msg", flag);		//0失败  1成功  -1文件过大  -2文件类型不匹配
-			response.sendRedirect("Writer-search.html");
-			//return "success";
+			System.out.println("最后的flag为 " + flag);
+			session.setAttribute("upFileFlag", "1");		//用户已经上传文件
+			session.setAttribute("upFileMsg", flag);		//具体信息在 "upFileMsg"中
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			json.put("msg", "0");
+			session.setAttribute("upFileFlag", "1");		//用户已经上传文件
+			session.setAttribute("upFileMsg", "0");			//但是上传失败了
 		} finally {
 			out.write(json.toString());
 			out.flush();
 			out.close();
+			response.sendRedirect("upload.html");	//跳转到上传的页面，此时在session中已存有信息
 		}
 		
 		return null;

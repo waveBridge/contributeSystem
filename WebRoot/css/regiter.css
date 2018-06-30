@@ -1,0 +1,19 @@
+.regiter-form{
+	background:rgba(238,238,238,0.5);
+	/*background: red;*/
+	width: 40%;
+	height: 380px;
+	color:black;
+}
+
+.form-group{
+	/*background: green;*/
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 10px;
+}
+.form-control{
+	background:rgba(238,238,238,0.5);
+	margin-left: 40px;
+	color:black;
+}

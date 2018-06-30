@@ -16,8 +16,8 @@
 	<package name="myPackage" namespace="/" extends="json-default">		
 		<action name="upFileAction" class = "userAction" method="upFile">
 			<!-- param是参数，能够到action中 -->
-			<param name="maximumSize ">1000000</param>    
-            <param name="allowedTypes">image/png,image/jpg,image/jpeg,image/gif,application/msword,application/pdf,application/vnd.ms-excel,aplication/zip,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</param>     
+			<param name="maximumSize ">2000000</param>    
+            <param name="allowedTypes">application/msword,application/pdf,aplication/zip,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document</param>     
 		</action>
 		<action name="changeFileAction" class = "userAction" method="changeFile">
 			<!-- param是参数，能够到action中 -->

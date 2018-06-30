@@ -1,4 +1,5 @@
 function zhuce(){
+        alert("aaa");
         var inputusername=$("#username").val();
         var inputnickname=$("#nickname").val();
         var inputpw1=$("#pw1").val();

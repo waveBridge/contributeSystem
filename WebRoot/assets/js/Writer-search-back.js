@@ -27,33 +27,6 @@ $(document).ready(function(){
                 "<td><button class='upplode' midup='"+msg[i].mid+"' href='Writer-renew.html'>更新</button></td>"+
 
               "</tr>";
-            }else if(msg[i].state==1){
-              str+="<tr>"+
-                "<td>"+msg[i].materialName+"</td>"+
-                "<td>"+msg[i].user.username+"</td>"+
-                "<td>"+msg[i].date+"</td>"+
-                "<td>"+"录用"+"</td>"+
-                "<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>下载</button></td>"+
-                "<td><button class='upplode' midup='"+msg[i].mid+"' href='Writer-renew.html'>更新</button></td>"+
-              "</tr>";
-            }else if(msg[i].state==2){
-              str+="<tr>"+
-                "<td>"+msg[i].materialName+"</td>"+
-                "<td>"+msg[i].user.username+"</td>"+
-                "<td>"+msg[i].date+"</td>"+
-                "<td>"+"退稿"+"</td>"+
-                "<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>下载</button></td>"+
-                "<td><button class='upplode' midup='"+msg[i].mid+"' href='Writer-renew.html'>更新</button></td>"+
-              "</tr>";
-            }else{
-              str+="<tr>"+
-                "<td>"+msg[i].materialName+"</td>"+
-                "<td>"+msg[i].user.username+"</td>"+
-                "<td>"+msg[i].date+"</td>"+
-                "<td>"+"修改"+"</td>"+
-                "<td><button mid='"+msg[i].mid+"' type= 'button' class='btn btn-info load'>下载</button></td>"+
-                "<td><button class='upplode' midup='"+msg[i].mid+"' href='Writer-renew.html'>更新</button></td>"+
-              "</tr>";
             }
           }
           $("#show_all").html(str);

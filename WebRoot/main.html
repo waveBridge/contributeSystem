@@ -1,0 +1,351 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Solana</title>
+	<meta charset=utf-8 >
+
+	<meta name="robots" content="index, follow" > 
+	<meta name="keywords" content="" > 
+	<meta name="description" content="" > 
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<!-- CSS begin -->
+
+
+	<link rel="stylesheet" type="text/css" href="css/style.css" >
+	<link rel="stylesheet" type="text/css" href="css/Writer-show.css" >
+	<link rel="stylesheet" type="text/css" href="css/skeleton.css" >
+
+	<link rel="stylesheet" type="text/css" href="css/jquery.fancybox-1.3.4.css"  >
+	<link rel="stylesheet" href="css/switcher/style.css">
+	<link rel="stylesheet" href="css/layout/wide.css" id="layout">
+	<link rel="stylesheet" href="css/colors/yellow.css" id="colors">
+
+	
+	<!-- CSS end -->
+	<script type="text/javascript" src="js/main-back.js"></script> 
+</head>
+<body>
+	
+	<div id="wrap" class="boxed">
+		<div class="grey-bg"> <!-- Grey bg  -->	
+
+
+
+
+			<!-- HEADER -->
+			<header id="header" >
+				<div class="container clearfix">
+					<div class="sixteen columns">
+						<div class="header-container m-top-30 clearfix">
+
+							<div class="header-logo-container ">
+								<div class="logo-container">	
+									<a href="index.html" class="logo" rel="home" title="Home">
+										<img src="images/logo-retina.png" alt="solana" >
+									</a>
+								</div>
+							</div>
+
+							<div class="header-menu-container right">
+								<!-- TOP MENU -->
+								<nav id="main-nav">
+									<ul class="sf-menu clearfix">
+										<li ><a href="index.html">主页</a>
+											<!-- <ul>
+												<li><a href="index2.html">Home 2</a></li>
+												<li><a href="index3.html">Home 3</a></li>
+												<li><a href="index4.html">Home 4</a></li>
+												<li><a href="index5.html">Home 5</a></li>
+											</ul> -->
+										</li>
+										<li><a href="elements.html">个人中心</a>
+											<ul>
+												<li><a href="about-us.html">About Us</a></li>
+												<li><a href="services.html">Services</a></li>
+												<li><a href="elements.html">Elements</a></li>
+												<li><a href="icons.html">Icons</a></li>
+												<li><a href="pricing-tables.html">Pricing tables</a></li>
+												<li><a href="404.html">404 Error</a></li>
+
+											</ul>
+										</li>
+										<li class="current"><a href="portfolio.html">稿件信息</a>
+											<!-- <ul>
+												<li><a href="portfolio.html">2 column</a></li>
+												<li><a href="portfolio3.html">3 column</a></li>
+												<li class="current"><a href="portfolio4.html">4 column</a></li>
+												<li><a href="portfolio-single.html">Portfolio single</a></li>
+												<li><a href="#">3D level menu</a>
+													<ul>
+														<li><a href="#">Menu item</a></li>
+														<li><a href="#">Menu item</a></li>
+													</ul>
+												</li>
+											</ul> -->
+										</li>
+										<li><a href="blog.html">投稿</a>
+											<ul>
+												<li><a href="blog-single.html">Blog-single</a></li>
+											</ul>
+										</li>
+										<li ><a href="contact.html">联系我们</a></li>
+										
+									</ul>
+								</nav>
+								
+								<div class="search-container ">
+									<form action="#" class="search-form">
+										<input type="text" name="search-form-txt" class="search-text" >
+										<input type="submit" value="" class="search-submit" name="submit">
+									</form>
+								</div>
+								
+							</div>
+							
+						</div>
+					</div>
+				</div>
+
+			</header>
+
+			<!-- PAGE TITLE -->
+			<div class="container m-bot-35 clearfix">
+				<div class="sixteen columns">
+					<div class="page-title-container clearfix">
+						<!-- <h1 class="page-title">稿件详情</h1> -->
+						<ul id="filter"> 
+							<li class="current all"><a href="#">全部</a></li> 
+							<li class="category" onclick="fenlei(1)"><a href="#">哲学</a></li> 
+							<li class="category" onclick="fenlei(2)"><a href="#">经济</a></li> 
+							<li class="category" onclick="fenlei(3)"><a href="#">法学</a></li> 
+							<li class="category" onclick="fenlei(4)"><a href="#">教育</a></li>
+							<li class="category" onclick="fenlei(5)"><a href="#">文学</a></li>
+							<li class="category" onclick="fenlei(6)"><a href="#">历史</a></li>
+							<li class="category" onclick="fenlei(7)"><a href="#">理学</a></li>
+							<li class="category" onclick="fenlei(8)"><a href="#">工学</a></li>
+							<li class="category" onclick="fenlei(9)"><a href="#">农学</a></li>
+							<li class="category" onclick="fenlei(10)"><a href="#">医学</a></li>
+							<li class="category" onclick="fenlei(11)"><a href="#">军事</a></li>
+							<li class="category" onclick="fenlei(12)"><a href="#">管理</a></li>
+							<li class="category" onclick="fenlei(13)"><a href="#">艺术</a></li>
+						</ul>
+					</div>	
+
+
+
+				</div>
+			</div>		
+
+		</div>	<!-- Grey bg end -->	
+
+
+
+
+
+		<!-- CONTENT -->
+		<div class="container filter-portfolio clearfix">
+			<ul id="show_all" class="clearfix">
+
+				 <!-- PORTFOLIO ITEM -->
+
+				<!-- <li data-id="id-1" data-type="category2" class="four columns m-bot-35">
+					<div class="hover-item">
+						<div class="view view-first">
+							<img src="images/content/port-2-1.jpg" alt="Ipsum" >
+							<div class="mask"></div>	
+							<div class="abs">
+								<a href="images/content/port-2-1.jpg" class="lightbox zoom info"></a><a href="portfolio-single.html" class="link info"></a>
+							</div>	
+						</div>
+						<div class="lw-item-caption-container">
+							<a class="a-invert" href="portfolio-single.html" >
+								<div class="item-title-main-container clearfix">
+									<div class="item-title-text-container">
+										<span class="bold">名称</span> 
+									</div>
+								</div>
+							</a>
+							<div class="item-caption">
+								<div class="name-sty">作者</div>
+								<div class="name-sty">类别</div>
+								<div class="name-sty">时间</div>
+							</div>
+						</div>
+					</div>
+				</li> -->
+ 
+				<!-- PORTFOLIO ITEM -->
+				<!-- <li data-id="id-1" data-type="category1" class="four columns m-bot-35">
+					<div class="hover-item">
+						<div class="view view-first">
+							<img src="images/content/port-2-2.jpg" alt="Ipsum" >
+							<div class="mask"></div>	
+							<div class="abs">
+								<a href="images/content/port-2-2.jpg" class="lightbox zoom info"></a><a href="portfolio-single.html" class="link info"></a>
+							</div>	
+						</div>
+						<div class="lw-item-caption-container">
+							<a class="a-invert" href="portfolio-single.html" >
+								<div class="item-title-main-container clearfix">
+									<div class="item-title-text-container">
+										<span class="bold">名称</span> 
+									</div>
+								</div>
+							</a>
+							<div class="item-caption">
+								<div class="name-sty">作者</div>
+								<div class="name-sty">类别</div>
+								<div class="name-sty">时间</div>
+							</div>
+						</div>
+					</div>
+				</li> -->
+
+				<div id="show_all"></div>
+			</ul>
+		</div>	
+		<!-- PAGINATION -->
+		<div class="container clearfix">
+			<div class="pagination-1-container sixteen columns">
+				<ul class="pagination-1">
+					<li>
+						<a class="pag-prev" href="#"></a>
+					</li>
+					<li>
+						<a class="pag-current" href="#">1</a>
+					</li>
+					<li>
+						<a href="#">2</a>
+					</li>
+					<li>
+						<a href="#">3</a>
+					</li>
+					<li>
+						<a class="pag-next" href="#"></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		
+		<!-- FOOTER -->
+		<footer>
+			<div class="footer-content-bg">
+				<div class="container clearfix">
+					<div class="one-third-footer-spec column omega">
+
+						<div class="logo-footer-container">	
+							<a href="index.html" class="logo" rel="home" title="Home">
+								<img src="images/logo-retina.png" alt="solana" >
+							</a>
+						</div>
+					</div>
+					<div class="two-thirds-footer-spec column alpha">
+
+
+						<p class="footer-content-container m-none">WE PROVIDE AWESOME DIGITAL <strong>SERVICES</strong></p>
+
+					</div>
+				</div>
+				<div class="container clearfix">
+					<div class="one-third column">
+						<div class="footer-social-text-container">
+							<p class="title-font-24"> <strong>天才投稿系统</strong>欢迎你！</p>
+							<p class="title-font-12">我们希望倾听您的意见</p>
+						</div>
+						<div class="footer-social-links-container">	
+							<ul class="social-links clearfix">
+								<li><a class="facebook-link" target="_blank" title="Facebook" href=""></a></li>
+								<li><a class="skype-link" target="_blank" title="Skype" href=""></a></li>
+								<li><a class="twitter-link" target="_blank" title="Twitter" href=""></a></li>
+
+								<li><a class="pintrest-link" target="_blank" title="pintrest" href=""></a></li>
+								<li><a class="googleplus-link" target="_blank" title="googleplus" href=""></a></li>
+							</ul>
+						</div>
+
+
+					</div>
+					<div class="one-third column ">
+						<h3 class="caption footer-block">最新 <span class="bold">投稿</span></h3>
+						<ul class="latest-post">
+							<li class="standart-post">
+								<h4 class="title-post-footer"><a href="blog-single.html">Donec id elit</a></h4>
+								<h4 class="date-post-footer">July 10, 2016</h4>
+							</li>
+							<li class="image-post">
+								<h4 class="title-post-footer"><a href="blog-single.html">Donec id elit</a></h4>
+								<h4 class="date-post-footer">July 10, 2016</h4>
+							</li>
+
+						</ul>
+					</div>
+					<div class="one-third column ">
+						<h3 class="caption footer-block">联系 <span class="bold">我们</span></h3>
+						<ul class="footer-contact-info">
+							<li class="footer-loc">
+								江苏省南京市河海大学江宁校区
+							</li>
+							<li class="footer-phone">
+								(李金桥) 456-7890<br>(曾丽) 987-6540
+							</li>
+							<li class="footer-mail">
+								<a href="">19999999@qq.com</a><br>
+								<a href="">196437@163.com</a>
+							</li>
+						</ul>
+
+					</div>
+				</div>
+			</div>
+			<div class="footer-copyright-bg">
+				<div class="container ">
+					<div class="sixteen columns clearfix">
+						<div class="footer-menu-container">
+							<nav class="clearfix" id="footer-nav">
+								<ul class="footer-menu">
+									<li><a href="index.html">Home</a></li>
+									<li><a href="elements.html">Features</a></li>
+									<li><a href="portfolio.html">Portfolio</a></li>
+									<li><a href="blog.html">Blog</a></li>
+									<li><a href="contact.html">Contact</a></li>
+									<li><a href="">Purchase</a></li>
+								</ul>
+							</nav>
+						</div>	
+						<div class="footer-copyright-container right-text">
+							&copy; Solan<span class="yellow">a</span> - Build with Passion by <a class="author" href="">AbcGomel</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</footer>	
+		<p id="back-top">
+			<a href="#top" title="Back to Top"><span></span></a>
+		</p>
+	</div><!-- End wrap -->
+	<!-- JS begin -->
+
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/superfish.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+
+	<script type="text/javascript" src="js/jquery.jcarousel.js"></script>
+	<script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>
+	<script type="text/javascript" src="js/jQuery.BlackAndWhite.min.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="js/jflickrfeed.min.js"></script>
+	<script type="text/javascript" src="js/jquery.quicksand.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/jquery-cookie.js"></script>  
+	<script src="js/styleswitcher.js"></script>
+	<div class="switcher"></div>
+
+	<!-- JS end -->
+
+</body>
+</html>		

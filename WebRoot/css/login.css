@@ -1,0 +1,38 @@
+.regiter-form{
+	background:rgba(238,238,238,0.5);
+	/*width: 40%;*/
+
+	height: 300px;
+	color:black;
+}
+
+.form-group{
+	/*background: green;*/
+	margin: 0 20% 10px;
+	font-size: 15px;
+}
+
+.form-group-tittle{
+	/*background: red;*/
+	display: block;
+	height: 70px;
+	font-size: 45px;
+	margin:10% 20% 0;
+	font-family:"Times New Roman",Georgia,Serif;
+}
+.form-subL-group{
+	/*background: red;*/
+	display: block;
+	float: left;
+	width: 55%;
+	margin: 5px;
+	font-size: 12px;
+}
+.form-subR-group{
+	/*background: green;*/
+	display: block;
+	float: right;
+	width: 35%;
+	margin: 5px;
+	font-size: 12px;
+}
