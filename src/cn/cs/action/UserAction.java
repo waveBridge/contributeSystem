@@ -453,19 +453,18 @@ public class UserAction extends ActionSupport {
 			System.out.println("最后的flag为 " + flag);
 			session.setAttribute("upFileFlag", "1");		//用户已经上传文件
 			session.setAttribute("upFileMsg", flag);		//具体信息在 "upFileMsg"中
-			
+			response.sendRedirect("upload.html");	//跳转到上传的页面，此时在session中已存有信息
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			json.put("msg", "0");
 			session.setAttribute("upFileFlag", "1");		//用户已经上传文件
 			session.setAttribute("upFileMsg", "0");			//但是上传失败了
+			response.sendRedirect("upload.html");	//跳转到上传的页面，此时在session中已存有信息
 		} finally {
 			out.write(json.toString());
 			out.flush();
 			out.close();
-			response.sendRedirect("upload.html");	//跳转到上传的页面，此时在session中已存有信息
 		}
-		
 		return null;
 	}
 	

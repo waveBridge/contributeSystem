@@ -124,7 +124,7 @@ public class AdminAction extends ActionSupport {
 				json.put("msg", "-1");
 			} else {
 				if(session.getAttribute("aid") == null){
-					Redundant.haveEmployed(materialSet);
+					materialSet = Redundant.haveEmployed(materialSet);
 				}
 				List<Material> materials = OrderUtil.sort(materialSet);
 				materials = Redundant.redundant(materials);
@@ -169,7 +169,7 @@ public class AdminAction extends ActionSupport {
 				json.put("msg", "-1");
 			} else {
 				if(session.getAttribute("aid") == null){
-					Redundant.haveEmployed(materialList);
+					materialList = Redundant.haveEmployed(materialList);
 				}
 				materialList = OrderUtil.sort(materialList);
 				materialList = Redundant.redundant(materialList);

@@ -1,5 +1,6 @@
 package cn.cs.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -70,19 +71,21 @@ public class Redundant {
 		}
 	}
 	
-	public static void haveEmployed(List<Material> materialList) {
-		System.out.println("haveEmployed...materialSet...");
+	public static List<Material> haveEmployed(List<Material> materialList) {
+		System.out.println("haveEmployed...materialList...");
 		
 		try{
+			List<Material> materials = new ArrayList<Material>();
 			for(Material m : materialList){
-				if(m.getState() != 1){
-					materialList.remove(m);
+				if(m.getState() == 1){
+					materials.add(m);
 				}
 			}
+			return materials;
 		} catch (Exception e) {
 			System.out.println(e.toString());
+			return null;
 		}
-		
 	}
 
 	public static void haveEmployed(Material material) {

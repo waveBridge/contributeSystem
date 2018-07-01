@@ -52,7 +52,7 @@ out	:	("msg":"0")失败   		("msg":[{稿件属性}], "cnt":"稿件数量")
 //由于技术限制，所以多了这么个action。上传稿件的页面，前端先访问此action，看是否为第一次到达页面。
 url	:	upFileFlagAction
 in	:	无
-out	:	第一次到达页面（"flag":"0"）		不是第一次("flag":"1","msg":"具体信息") ,(msg="1"，表示上传成功；msg="0"，表示错误；msg="-1",表示文件过大，不能超过2MB；msg="2",表示文件类型不匹配，只能是doc,docx,zip,pdf格式)
+out	:	第一次到达页面（"flag":"0"）		不是第一次("flag":"1","msg":"具体信息") ,(msg="1"，表示上传成功；msg="0"，表示错误；msg="-1",表示文件过大，不能超过2MB；msg="-2",表示文件类型不匹配，只能是doc,docx,zip,pdf格式)
 
 //用户上传稿件
 url	:	upFileAction
